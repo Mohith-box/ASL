@@ -445,12 +445,25 @@
         setRegType('open');
       }
 
+      // Check if arriving with pre-selected parameters to lock selections
+      const isPreSelected = params.has('sport') || params.has('category');
+
+      if (isPreSelected) {
+        // Disable changing tournament type tab
+        const tabsContainer = document.querySelector('.type-selector-tabs');
+        if (tabsContainer) {
+          tabsContainer.style.pointerEvents = 'none';
+          tabsContainer.style.opacity = '0.75';
+        }
+      }
+
       // Auto-select sport if provided
       const sport = params.get('sport');
       if (sport) {
         const sportSelect = document.getElementById('regSport');
         if (sportSelect) {
           sportSelect.value = sport;
+          if (isPreSelected) sportSelect.disabled = true;
         }
       }
 
@@ -471,7 +484,12 @@
           if (typeof togglePartnerFields === 'function') togglePartnerFields();
         }
 
-        // Set gender value for gendered categories
+        // Lock all category checkboxes so they cannot be edited
+        document.querySelectorAll('.cat-checkbox').forEach(cb => {
+          cb.disabled = true;
+        });
+
+        // Set gender value for gendered categories and disable it
         const genderSelect = document.getElementById('regGender');
         if (genderSelect) {
           if (category.includes('-men') || category.includes('men-')) {
@@ -479,6 +497,7 @@
           } else if (category.includes('-women') || category.includes('women-')) {
             genderSelect.value = 'female';
           }
+          genderSelect.disabled = true;
         }
       }
     });
