@@ -1371,6 +1371,15 @@ img.sport-card-emoji {
   margin-bottom: 12px;
   filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
   transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-emoji img, img.gallery-emoji {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
 }
 
 .gallery-label {
@@ -1407,6 +1416,15 @@ img.sport-card-emoji {
 .gallery-overlay-emoji {
   font-size: 2rem;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-overlay-emoji img, img.gallery-overlay-emoji {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
 }
 
 .gallery-card-overlay h4 {
@@ -3313,6 +3331,23 @@ footer {
 
 .modal-category-grid::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
+}
+
+.inline-sport-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.donut-sport-icon-img {
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 

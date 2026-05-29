@@ -467,7 +467,7 @@ function openCategoriesModal(type, dateStr) {
       : [
           { id: 'badminton', label: '🏸 Badminton' },
           { id: 'cricket', label: '🏏 Box Cricket' },
-          { id: 'pickleball', label: '🏓 Pickleball' },
+          { id: 'pickleball', label: '<img src="assets/pickleball.png" class="inline-sport-icon"> Pickleball' },
           { id: 'soccer', label: '⚽ Soccer' }
         ];
         
@@ -552,7 +552,7 @@ function initDonutChart() {
     badminton: { num: '🏸', label: 'Badminton', color: 'var(--open-cyan)', level: 'Open & Corporate Leagues' },
     cricket: { num: '🏏', label: 'Box Cricket', color: 'var(--green)', level: 'Launching Soon' },
     esports: { num: '🎮', label: 'eSports', color: 'var(--purple)', level: 'Launching Soon' },
-    pickleball: { num: '🏓', label: 'Pickleball', color: 'var(--accent)', level: 'Launching Soon' },
+    pickleball: { num: '<img src="assets/pickleball.png" class="donut-sport-icon-img">', label: 'Pickleball', color: 'var(--accent)', level: 'Launching Soon' },
     soccer: { num: '⚽', label: 'Soccer', color: 'var(--red)', level: 'Launching Soon' }
   };
 
@@ -563,7 +563,7 @@ function initDonutChart() {
     if (!data) return;
 
     // Update center content dynamically
-    centerNum.textContent = data.num;
+    centerNum.innerHTML = data.num;
     centerNum.style.color = data.color;
     centerNum.style.fontSize = '3.2rem';
     
