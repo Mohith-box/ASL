@@ -208,10 +208,12 @@
           </div>
         </div>
         
-        <!-- Gender (Hidden: Auto-selected based on category selection) -->
-        <div style="display: none;">
-          <select id="regGender" class="form-select">
-            <option value="male" selected>Male</option>
+        <!-- Gender Select -->
+        <div class="form-group">
+          <label class="form-label" for="regGender">Gender <span>*</span></label>
+          <select id="regGender" class="form-select" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>

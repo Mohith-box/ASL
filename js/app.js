@@ -418,6 +418,7 @@ const categoriesData = {
     ]
   }
 };
+window.categoriesData = categoriesData;
 
 let currentModalType = 'open';
 let currentModalDate = '';
