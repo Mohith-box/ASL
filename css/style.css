@@ -3350,4 +3350,28 @@ footer {
   display: inline-block;
 }
 
+/* Grayscale and locked states for disabled inputs and category choices */
+.form-select:disabled,
+.form-input:disabled {
+  background-color: rgba(255, 255, 255, 0.01) !important;
+  color: var(--text-muted) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  filter: grayscale(1) opacity(0.6);
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+.cat-checkbox:disabled + .cat-checkbox-card,
+.cat-checkbox:disabled ~ .cat-checkbox-card {
+  filter: grayscale(1) opacity(0.55);
+  cursor: not-allowed !important;
+  border-color: rgba(255, 255, 255, 0.04) !important;
+  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.01) !important;
+}
+
+.cat-checkbox-wrapper:has(input:disabled) {
+  cursor: not-allowed !important;
+}
+
 
