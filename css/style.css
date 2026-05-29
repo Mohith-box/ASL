@@ -648,6 +648,13 @@ nav {
   transition: var(--transition);
 }
 
+img.sport-card-emoji {
+  width: 9rem;
+  height: 9rem;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 .sport-card:hover .sport-card-emoji {
   transform: scale(1.1) rotate(-10deg);
   opacity: 0.1;

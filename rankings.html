@@ -141,6 +141,20 @@
       font-size: 1.6rem;
       filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
       transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .premium-sport-icon img {
+      width: 1.6rem;
+      height: 1.6rem;
+      object-fit: contain;
+      transition: filter 0.3s ease;
+    }
+
+    .premium-sport-card.active .premium-sport-icon img {
+      filter: drop-shadow(0 0 5px var(--open-cyan)) brightness(1.2);
     }
     
     .premium-sport-card:hover .premium-sport-icon {
@@ -397,7 +411,7 @@
         <span class="premium-sport-name">Soccer</span>
       </div>
       <div class="premium-sport-card" data-sport="pickleball">
-        <span class="premium-sport-icon">🥒</span>
+        <span class="premium-sport-icon"><img src="assets/pickleball.png" alt="Pickleball Icon"></span>
         <span class="premium-sport-name">Pickleball</span>
       </div>
     </div>
