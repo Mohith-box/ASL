@@ -249,10 +249,10 @@
           <label class="form-label" for="regSport">Select Sport <span>*</span></label>
           <select id="regSport" class="form-select" required>
             <option value="badminton">Badminton</option>
-            <option value="cricket" disabled>Box Cricket (Coming Soon)</option>
-            <option value="esports" disabled>eSports (Coming Soon)</option>
-            <option value="pickleball" disabled>Pickleball (Coming Soon)</option>
-            <option value="soccer" disabled>Soccer (Coming Soon)</option>
+            <option value="cricket">Box Cricket</option>
+            <option value="esports">Esports</option>
+            <option value="pickleball">Pickleball</option>
+            <option value="soccer">Soccer</option>
           </select>
         </div>
         
@@ -452,6 +452,11 @@
         }
       }
 
+      // Explicitly rebuild categories here to reflect query parameter selections
+      if (typeof rebuildCategories === 'function') {
+        rebuildCategories();
+      }
+
       // Auto-select category checkbox and infer gender
       const category = params.get('category');
       if (category) {
@@ -541,6 +546,11 @@
       const btnCorp = document.getElementById('btnSubmitCorp');
       if (btnOpen) btnOpen.style.display = type === 'open' ? 'block' : 'none';
       if (btnCorp) btnCorp.style.display = type === 'corp' ? 'block' : 'none';
+
+      // Rebuild categories to show Open/Corp options for the selected sport
+      if (typeof rebuildCategories === 'function') {
+        rebuildCategories();
+      }
     }
   </script>
 </body>

@@ -7,23 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('aslRegistrationForm');
   if (!form) return;
 
-  // Initialize payment summary
-  updatePaymentSummary();
-
-  // Live-update payment summary on any checkbox change
-  document.querySelectorAll('.cat-checkbox').forEach(cb => {
-    cb.addEventListener('change', () => {
-      autoSelectGenderFromCategories();
-      updatePaymentSummary();
-      if (typeof togglePartnerFields === 'function') togglePartnerFields();
-    });
-  });
-
-  // Run once initially to capture query param selections
-  autoSelectGenderFromCategories();
+  // Rebuild category checkboxes dynamically on load
+  rebuildCategories();
 
   const sportSelect = document.getElementById('regSport');
-  if (sportSelect) sportSelect.addEventListener('change', updatePaymentSummary);
+  if (sportSelect) {
+    sportSelect.addEventListener('change', () => {
+      rebuildCategories();
+    });
+  }
 
   // ── Form Submit ──────────────────────────────────────────────
   form.addEventListener('submit', async (e) => {
@@ -275,3 +267,61 @@ function autoSelectGenderFromCategories() {
     genderSelect.value = 'other';
   }
 }
+
+// ── Dynamic Category Rebuilder ─────────────────────────────────────
+function rebuildCategories() {
+  const typeInput = document.getElementById('regTournamentType');
+  const sportSelect = document.getElementById('regSport');
+  const container = document.querySelector('.category-checkbox-grid');
+  
+  if (!typeInput || !sportSelect || !container) return;
+  
+  const type = typeInput.value || 'open';
+  const sport = sportSelect.value || 'badminton';
+  
+  // Note: categoriesData is defined globally in js/app.js
+  const categories = (window.categoriesData && window.categoriesData[type] && window.categoriesData[type][sport]) || [];
+  
+  if (categories.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-muted);font-size:0.95rem;padding:20px;grid-column:span 2;text-align:center;">No categories available for this sport.</div>';
+    return;
+  }
+  
+  container.innerHTML = categories.map(cat => {
+    // Extract emoji and name
+    let icon = "🏆";
+    let displayName = cat.name;
+    
+    // Parse symbol if present at beginning (e.g. 👨, 👩, 👫, 👥, 🏏, 🏢, ⚽, 🎮)
+    const match = cat.name.match(/^([^\w\s\d<>-]+)\s*(.*)$/);
+    if (match) {
+      icon = match[1];
+      displayName = match[2];
+    }
+    
+    return `
+      <label class="cat-checkbox-wrapper" id="${cat.id === 'team-badminton' ? 'teamBadmintonWrapper' : ''}">
+        <input type="checkbox" name="categories" value="${cat.id}" class="cat-checkbox">
+        <div class="cat-checkbox-card ${type === 'corp' ? 'corp-check' : ''}">
+          <span class="cat-icon">${icon}</span>
+          <span class="cat-label">${displayName}</span>
+        </div>
+      </label>
+    `;
+  }).join('');
+  
+  // Re-attach event listeners to the new checkboxes
+  document.querySelectorAll('.cat-checkbox').forEach(cb => {
+    cb.addEventListener('change', () => {
+      autoSelectGenderFromCategories();
+      updatePaymentSummary();
+      if (typeof togglePartnerFields === 'function') togglePartnerFields();
+    });
+  });
+
+  // Re-run dependencies to refresh status
+  autoSelectGenderFromCategories();
+  updatePaymentSummary();
+  if (typeof togglePartnerFields === 'function') togglePartnerFields();
+}
+window.rebuildCategories = rebuildCategories;
