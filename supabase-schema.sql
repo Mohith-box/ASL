@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS players (
   email            TEXT UNIQUE NOT NULL,
   sport            TEXT NOT NULL,
   category         TEXT NOT NULL,        -- 'singles-men', 'doubles-men', etc.
+  location         TEXT NOT NULL DEFAULT 'Bengaluru', -- player location
+  team             TEXT NOT NULL DEFAULT 'Independent', -- player team name
   initials         TEXT NOT NULL DEFAULT 'PL',
   avatar_gradient  TEXT DEFAULT 'linear-gradient(135deg, #ff8c00, #ff3c00)',
   photo_url        TEXT,                 -- Supabase Storage public URL
@@ -99,7 +101,7 @@ BEGIN
   SET rank = sub.new_rank
   FROM (
     SELECT id,
-           ROW_NUMBER() OVER (ORDER BY points DESC) AS new_rank
+           ROW_NUMBER() OVER (PARTITION BY location, sport, category ORDER BY points DESC) AS new_rank
     FROM players
   ) sub
   WHERE players.id = sub.id;
