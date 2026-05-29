@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL — Register | Abstream Sports League</title>
+  <meta name="description" content="Register for upcoming Abstream Sports League (ASL) tournaments in Bengaluru. Select category, pay securely, and secure your place.">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* Registration Page Specific Styles */
+    .register-hero {
+      padding: 140px 5% 50px;
+      text-align: center;
+      background-image: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 60%);
+    }
+    
+    .register-container {
+      max-width: 700px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+    
+    .type-selector-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+    
+    .selector-tab {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .selector-tab:hover {
+      border-color: var(--border-hover);
+    }
+    
+    .selector-tab-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .selector-tab-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    
+    /* Toggle active styles */
+    .selector-tab.active-open {
+      border-color: var(--open-cyan);
+      background: rgba(0, 240, 255, 0.04);
+      box-shadow: 0 0 15px var(--open-cyan-glow);
+    }
+    
+    .selector-tab.active-open .selector-tab-title {
+      color: var(--open-cyan);
+    }
+    
+    .selector-tab.active-corp {
+      border-color: var(--corp-gold);
+      background: rgba(255, 215, 0, 0.04);
+      box-shadow: 0 0 15px var(--corp-gold-glow);
+    }
+    
+    .selector-tab.active-corp .selector-tab-title {
+      color: var(--corp-gold);
+    }
+    
+    .form-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-panel.theme-open {
+      border-color: rgba(0, 240, 255, 0.2);
+    }
+    
+    .form-panel.theme-corp {
+      border-color: rgba(255, 215, 0, 0.2);
+    }
+    
+    @media (max-width: 576px) {
+      .form-panel {
+        padding: 25px 20px;
+      }
+      .type-selector-tabs {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+    
+    <div class="nav-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#sports">Sports</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#locations">Locations</a>
+      <a href="index.html#about">About</a>
+      <a href="login.html" id="navLoginLink">Login</a>
+    </div>
+    
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-outline title-font">Home Page</a>
+      <button class="hamburger" onclick="toggleMobileNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="modal-close" style="position: absolute; top: 25px; right: 25px;" onclick="closeMobileNav()">&times;</button>
+    <div class="mobile-links">
+      <a href="index.html#hero" onclick="closeMobileNav()">Home</a>
+      <a href="index.html#sports" onclick="closeMobileNav()">Sports</a>
+      <a href="index.html#schedule" onclick="closeMobileNav()">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#locations" onclick="closeMobileNav()">Locations</a>
+      <a href="index.html#about" onclick="closeMobileNav()">About</a>
+      <a href="login.html" onclick="closeMobileNav()">Login</a>
+    </div>
+  </div>
+
+  <!-- ── Register Hero ── -->
+  <header class="register-hero">
+    <span class="section-subtitle">Reserve Your Slot</span>
+    <h1 class="section-title">Tournament Entry</h1>
+    <p class="section-desc">Choose between our Open League and Corporate Cup to start competing.</p>
+  </header>
+
+  <!-- ── Main Section ── -->
+  <main class="register-container">
+    
+    <!-- Tournament Type Tabs -->
+    <div class="type-selector-tabs">
+      <div class="selector-tab active-open" id="tabSelectOpen" onclick="setRegType('open')">
+        <span class="selector-tab-title">🏸 Open Level</span>
+        <span class="selector-tab-desc">2nd Week · All Welcome</span>
+      </div>
+      <div class="selector-tab" id="tabSelectCorp" onclick="setRegType('corp')">
+        <span class="selector-tab-title">⬢ Corporate</span>
+        <span class="selector-tab-desc">4th Week · Company Teams</span>
+      </div>
+    </div>
+    
+    <!-- Registration Form Panel -->
+    <div class="form-panel theme-open" id="registrationPanel">
+      
+      <!-- Type Badge -->
+      <span class="form-type-badge open" id="pageTypeBadge">⬢ Open Tournament — 2nd Week</span>
+      
+      <!-- Main Form -->
+      <form id="aslRegistrationForm">
+        <!-- Hidden input for type -->
+        <input type="hidden" id="regTournamentType" value="open">
+        
+        <!-- Personal Info -->
+        <div class="form-group">
+          <label class="form-label" for="regFullName">Full Name <span>*</span></label>
+          <input type="text" id="regFullName" class="form-input" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group-row">
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email Address <span>*</span></label>
+            <input type="email" id="regEmail" class="form-input" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regPhone">Phone Number <span>*</span></label>
+            <input type="tel" id="regPhone" class="form-input" placeholder="10-digit number" required>
+          </div>
+        </div>
+        
+        <!-- Gender (Hidden: Auto-selected based on category selection) -->
+        <div style="display: none;">
+          <select id="regGender" class="form-select">
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Corporate Fields (Visible only for 'corp') -->
+        <div class="form-group corp-field" style="display: none;">
+          <label class="form-label" for="regCompany">Select Company <span>*</span></label>
+          <select id="regCompany" class="form-select">
+            <option value="google">Google</option>
+            <option value="hp">HP</option>
+            <option value="tcs">TCS</option>
+            <option value="infosys">Infosys</option>
+            <option value="wipro">Wipro</option>
+            <option value="accenture">Accenture</option>
+            <option value="microsoft">Microsoft</option>
+            <option value="amazon">Amazon</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group-row corp-field" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="regEmpId">Employee ID <span>*</span></label>
+            <input type="text" id="regEmpId" class="form-input" placeholder="e.g. EMP1234">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regDept">Department</label>
+            <input type="text" id="regDept" class="form-input" placeholder="e.g. Engineering">
+          </div>
+        </div>
+
+        <!-- Sport & Category -->
+        <div class="form-group">
+          <label class="form-label" for="regSport">Select Sport <span>*</span></label>
+          <select id="regSport" class="form-select" required>
+            <option value="badminton">Badminton</option>
+            <option value="cricket" disabled>Box Cricket (Coming Soon)</option>
+            <option value="esports" disabled>eSports (Coming Soon)</option>
+            <option value="pickleball" disabled>Pickleball (Coming Soon)</option>
+            <option value="soccer" disabled>Soccer (Coming Soon)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Select Categories <span>*</span> (Select one or more)</label>
+          <div class="category-checkbox-grid">
+            <label class="cat-checkbox-wrapper">
+              <input type="checkbox" name="categories" value="singles-men" class="cat-checkbox" onchange="togglePartnerFields()">
+              <div class="cat-checkbox-card">
+                <span class="cat-icon">👨</span>
+                <span class="cat-label">Men Singles</span>
+              </div>
+            </label>
+            <label class="cat-checkbox-wrapper">
+              <input type="checkbox" name="categories" value="doubles-men" class="cat-checkbox" onchange="togglePartnerFields()">
+              <div class="cat-checkbox-card">
+                <span class="cat-icon">👨&zwj;👨&zwj;</span>
+                <span class="cat-label">Men Doubles</span>
+              </div>
+            </label>
+            <label class="cat-checkbox-wrapper">
+              <input type="checkbox" name="categories" value="singles-women" class="cat-checkbox" onchange="togglePartnerFields()">
+              <div class="cat-checkbox-card">
+                <span class="cat-icon">👩</span>
+                <span class="cat-label">Women Singles</span>
+              </div>
+            </label>
+            <label class="cat-checkbox-wrapper">
+              <input type="checkbox" name="categories" value="doubles-women" class="cat-checkbox" onchange="togglePartnerFields()">
+              <div class="cat-checkbox-card">
+                <span class="cat-icon">👩&zwj;👩&zwj;</span>
+                <span class="cat-label">Women Doubles</span>
+              </div>
+            </label>
+            <label class="cat-checkbox-wrapper" style="grid-column: span 2;">
+              <input type="checkbox" name="categories" value="mixed-doubles" class="cat-checkbox" onchange="togglePartnerFields()">
+              <div class="cat-checkbox-card">
+                <span class="cat-icon">👫</span>
+                <span class="cat-label">Mixed Doubles</span>
+              </div>
+            </label>
+            <label id="teamBadmintonWrapper" class="cat-checkbox-wrapper" style="grid-column: span 2;">
+              <input type="checkbox" name="categories" value="team-badminton" class="cat-checkbox" onchange="togglePartnerFields()">
+              <div class="cat-checkbox-card">
+                <span class="cat-icon">👥</span>
+                <span class="cat-label">Badminton Team</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px;">(3 - 5 persons)</span>
+              </div>
+            </label>
+          </div>
+          <span class="form-note">Badminton & Pickleball: Singles ₹650/₹750, Doubles ₹1200/₹1500. Other sports: ₹500/category.</span>
+        </div>
+
+        <!-- Partner Fields (Dynamic) -->
+        <div id="partnerSection" style="display: none; border-left: 2px solid var(--accent); padding-left: 20px; margin: 25px 0;">
+          <h4 class="form-label" style="color: var(--accent); margin-bottom: 15px;">Partner Details (Required for Doubles)</h4>
+          <div class="form-group">
+            <label class="form-label" for="regPartnerName">Partner's Full Name <span>*</span></label>
+            <input type="text" id="regPartnerName" class="form-input" placeholder="Partner's full name">
+          </div>
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="regPartnerEmail">Partner's Email</label>
+              <input type="email" id="regPartnerEmail" class="form-input" placeholder="partner@example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regPartnerPhone">Partner's Phone <span>*</span></label>
+              <input type="tel" id="regPartnerPhone" class="form-input" placeholder="10-digit phone">
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Fee Calculation Summary -->
+        <div class="payment-summary">
+          <div class="payment-row">
+            <span>Category Fee (x<span id="summaryCatCount">0</span>)</span>
+            <span>₹<span id="summaryCatSubtotal">0.00</span></span>
+          </div>
+          <div class="payment-row">
+            <span>Convenience Fee (Tax)</span>
+            <span>₹0.00</span>
+          </div>
+          <div class="payment-row">
+            <span>Total Payable</span>
+            <span class="payment-row-total">₹<span id="summaryTotalPayable">0.00</span></span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button type="submit" class="btn btn-open submit-btn-open title-font" id="btnSubmitOpen">Pay & Register (Open)</button>
+        <button type="submit" class="btn btn-corp submit-btn-corp title-font" id="btnSubmitCorp" style="display: none;">Pay & Register (Corporate)</button>
+      </form>
+
+      <!-- Success Container -->
+      <div id="regSuccessContainer" class="form-success-state" style="display: none;">
+        <div class="success-icon-wrap">✔</div>
+        <h3 class="success-title title-font">Registration Successful</h3>
+        <p class="success-msg">Your category payment has been processed via RazorPay. Check your email inbox for entry details.</p>
+        <div class="reg-id-box" id="successRegId">ASL-REC-876129</div>
+        <a href="index.html" class="btn btn-primary title-font">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand">
+          <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+          <div class="nav-brand-text">
+            <span class="nav-title">ABSTREAM</span>
+            <span class="nav-subtitle">Sports League</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Organizing premium sports tournaments for Open & Corporate categories across Bengaluru.</p>
+
+      </div>
+      
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#hero">Home</a></li>
+          <li><a href="index.html#sports">Sports</a></li>
+          <li><a href="index.html#schedule">Schedule</a></li>
+          <li><a href="rankings.html">Player Rankings</a></li>
+          <li><a href="gallery.html">Event Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sports</h4>
+        <ul>
+          <li><a href="index.html#schedule">Badminton</a></li>
+          <li><a href="index.html#sports">Box Cricket</a></li>
+          <li><a href="index.html#sports">eSports</a></li>
+          <li><a href="index.html#sports">Pickleball</a></li>
+          <li><a href="index.html#sports">Soccer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <span>info@abstreamsl.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>+91 98765 43210</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Koramangala 4th Block, Bengaluru, KA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2026 Abstream Sports League. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/register.js"></script>
+
+  <!-- URL Query Handler for register.html -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check query parameter to auto-select type
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get('type');
+      if (type === 'corp') {
+        setRegType('corp');
+      } else {
+        setRegType('open');
+      }
+
+      // Auto-select sport if provided
+      const sport = params.get('sport');
+      if (sport) {
+        const sportSelect = document.getElementById('regSport');
+        if (sportSelect) {
+          sportSelect.value = sport;
+        }
+      }
+
+      // Auto-select category checkbox and infer gender
+      const category = params.get('category');
+      if (category) {
+        // Find and check the checkbox matching the category
+        const checkbox = document.querySelector(`.cat-checkbox[value="${category}"]`);
+        if (checkbox) {
+          checkbox.checked = true;
+          // Trigger payment updates & partner fields toggle
+          if (typeof updatePaymentSummary === 'function') updatePaymentSummary();
+          if (typeof togglePartnerFields === 'function') togglePartnerFields();
+        }
+
+        // Set gender value for gendered categories
+        const genderSelect = document.getElementById('regGender');
+        if (genderSelect) {
+          if (category.includes('-men') || category.includes('men-')) {
+            genderSelect.value = 'male';
+          } else if (category.includes('-women') || category.includes('women-')) {
+            genderSelect.value = 'female';
+          }
+        }
+      }
+    });
+
+    function setRegType(type) {
+      const panel = document.getElementById('registrationPanel');
+      const badge = document.getElementById('pageTypeBadge');
+      
+      const tabOpen = document.getElementById('tabSelectOpen');
+      const tabCorp = document.getElementById('tabSelectCorp');
+      
+      const hiddenInput = document.getElementById('regTournamentType');
+      
+      if (!panel || !badge || !tabOpen || !tabCorp || !hiddenInput) return;
+      
+      // Update hidden input
+      hiddenInput.value = type;
+      
+      // Update Tab Styles
+      if (type === 'open') {
+        tabOpen.classList.add('active-open');
+        tabCorp.classList.remove('active-corp');
+        
+        panel.className = 'form-panel theme-open';
+        
+        badge.className = 'form-type-badge open';
+        badge.innerHTML = '⬢ Open Tournament — 2nd Week';
+      } else {
+        tabOpen.classList.remove('active-open');
+        tabCorp.classList.add('active-corp');
+        
+        panel.className = 'form-panel theme-corp';
+        
+        badge.className = 'form-type-badge corp';
+        badge.innerHTML = '⬢ Corporate Cup — 4th Week';
+      }
+      
+      // Show/Hide Corporate fields
+      const corpFields = document.querySelectorAll('.corp-field');
+      corpFields.forEach(f => f.style.display = type === 'corp' ? 'block' : 'none');
+
+      // Dynamic visibility of Badminton Team category based on tournament type
+      const teamBadmintonWrapper = document.getElementById('teamBadmintonWrapper');
+      if (teamBadmintonWrapper) {
+        if (type === 'corp') {
+          teamBadmintonWrapper.style.display = 'block';
+        } else {
+          teamBadmintonWrapper.style.display = 'none';
+          const chk = teamBadmintonWrapper.querySelector('input');
+          if (chk) {
+            chk.checked = false;
+          }
+          if (typeof updatePaymentSummary === 'function') updatePaymentSummary();
+          if (typeof togglePartnerFields === 'function') togglePartnerFields();
+        }
+      }
+      
+      // Toggle category checkboxes styling (adding/removing .corp-check)
+      const checkboxes = document.querySelectorAll('.cat-checkbox');
+      checkboxes.forEach(c => {
+        if (type === 'corp') c.classList.add('corp-check');
+        else c.classList.remove('corp-check');
+      });
+      
+      // Show/Hide buttons
+      const btnOpen = document.getElementById('btnSubmitOpen');
+      const btnCorp = document.getElementById('btnSubmitCorp');
+      if (btnOpen) btnOpen.style.display = type === 'open' ? 'block' : 'none';
+      if (btnCorp) btnCorp.style.display = type === 'corp' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

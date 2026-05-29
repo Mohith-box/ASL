@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL — Player Rankings | ASL Bengaluru Masters</title>
+  <meta name="description" content="Check player leaderboard ranking points for Badminton, Cricket, eSports, Pickleball and Soccer in Bengaluru City.">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* Rankings Specific Styles */
+    .rankings-hero {
+      padding: 140px 5% 50px;
+      text-align: center;
+      background-image: radial-gradient(circle at center, rgba(0, 240, 255, 0.08) 0%, transparent 60%);
+    }
+    
+    .rankings-container {
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+    
+    /* Sport Filter Tabs on Rankings */
+    .sport-filter-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      scrollbar-width: none; /* Firefox */
+    }
+    
+    .sport-filter-tabs::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+    
+    .sport-filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 8px 18px;
+      color: var(--text-muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    
+    .sport-filter-btn:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+    
+    .sport-filter-btn.active {
+      background: rgba(255, 107, 0, 0.08);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+    
+    <div class="nav-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#sports">Sports</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="rankings.html" class="active">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#locations">Locations</a>
+      <a href="index.html#about">About</a>
+      <a href="login.html" id="navLoginLink">Login</a>
+    </div>
+    
+    <div class="nav-actions">
+      <button class="btn btn-primary title-font" onclick="openModal('open')">Register</button>
+      <button class="hamburger" onclick="toggleMobileNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="modal-close" style="position: absolute; top: 25px; right: 25px;" onclick="closeMobileNav()">&times;</button>
+    <div class="mobile-links">
+      <a href="index.html#hero" onclick="closeMobileNav()">Home</a>
+      <a href="index.html#sports" onclick="closeMobileNav()">Sports</a>
+      <a href="index.html#schedule" onclick="closeMobileNav()">Schedule</a>
+      <a href="rankings.html" onclick="closeMobileNav()">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#locations" onclick="closeMobileNav()">Locations</a>
+      <a href="index.html#about" onclick="closeMobileNav()">About</a>
+      <a href="login.html" onclick="closeMobileNav()">Login</a>
+    </div>
+    <button class="btn btn-primary title-font" style="margin-top: 20px;" onclick="closeMobileNav(); openModal('open')">Register Now</button>
+  </div>
+
+  <!-- ── Rankings Hero ── -->
+  <header class="rankings-hero">
+    <h1 class="display-font" style="font-size: clamp(3.5rem, 8vw, 5rem); color: var(--accent); text-shadow: 0 0 30px var(--accent-glow); margin-bottom: 10px; line-height: 1;">ASL</h1>
+    <h2 class="section-title" style="font-size: 2.2rem; margin-top: 0; margin-bottom: 15px;">Player Rankings</h2>
+    <p class="section-desc">Track Bengaluru city's top sports talent. Rankings update post every bi-weekly match round.</p>
+  </header>
+
+  <!-- ── Main Rankings Section ── -->
+  <main class="rankings-container">
+    
+    <!-- Filter Bar -->
+    <div class="rankings-filters">
+      <div class="filter-group" style="flex-grow: 1; width: 100%;">
+        <!-- Sport tabs (desktop) -->
+        <div class="sport-filter-tabs" id="sportTabs">
+          <button class="sport-filter-btn active" data-sport="all">All Sports</button>
+          <button class="sport-filter-btn" data-sport="badminton">Badminton</button>
+          <button class="sport-filter-btn" data-sport="cricket">Box Cricket</button>
+          <button class="sport-filter-btn" data-sport="esports">eSports</button>
+          <button class="sport-filter-btn" data-sport="pickleball">Pickleball</button>
+          <button class="sport-filter-btn" data-sport="soccer">Soccer</button>
+        </div>
+        
+        <!-- Mobile Sport Dropdown -->
+        <div class="mobile-sport-filter-wrap" style="display: none; width: 100%;">
+          <label class="form-label" for="mobileSportFilter" style="margin-bottom: 5px; display: block;">Filter By Sport</label>
+          <select class="filter-select" id="mobileSportFilter" style="width: 100%;">
+            <option value="all">All Sports</option>
+            <option value="badminton">Badminton</option>
+            <option value="cricket">Box Cricket</option>
+            <option value="esports">eSports</option>
+            <option value="pickleball">Pickleball</option>
+            <option value="soccer">Soccer</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <!-- Category Filter -->
+        <select class="filter-select" id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="singles-men">Men Singles</option>
+          <option value="doubles-men">Men Doubles</option>
+          <option value="singles-women">Women Singles</option>
+          <option value="doubles-women">Women Doubles</option>
+          <option value="mixed-doubles">Mixed Doubles</option>
+        </select>
+        
+        <!-- Search Input -->
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchPlayer" placeholder="Search player name...">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Leaderboard Table -->
+    <div class="rankings-table-container">
+      <table class="rankings-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">Rank</th>
+            <th>Player Name</th>
+            <th>Sport</th>
+            <th>Category</th>
+            <th>Points</th>
+            <th>Matches</th>
+            <th>Wins</th>
+            <th>Win Rate</th>
+          </tr>
+        </thead>
+        <tbody id="rankings-tbody">
+          <!-- Populated dynamically via js/rankings.js -->
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="pagination" id="rankingsPagination">
+      <!-- Populated dynamically -->
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand">
+          <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+          <div class="nav-brand-text">
+            <span class="nav-title">ABSTREAM</span>
+            <span class="nav-subtitle">Sports League</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Organizing premium sports tournaments for Open & Corporate categories across Bengaluru.</p>
+
+      </div>
+      
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#hero">Home</a></li>
+          <li><a href="index.html#sports">Sports</a></li>
+          <li><a href="index.html#schedule">Schedule</a></li>
+          <li><a href="rankings.html">Player Rankings</a></li>
+          <li><a href="gallery.html">Event Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sports</h4>
+        <ul>
+          <li><a href="index.html#schedule">Badminton</a></li>
+          <li><a href="index.html#sports">Box Cricket</a></li>
+          <li><a href="index.html#sports">eSports</a></li>
+          <li><a href="index.html#sports">Pickleball</a></li>
+          <li><a href="index.html#sports">Soccer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <span>info@abstreamsl.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>+91 98765 43210</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Koramangala 4th Block, Bengaluru, KA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2026 Abstream Sports League. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── MODAL: Player Profile ── -->
+  <div class="modal-overlay" id="playerModal">
+    <div class="modal-content player-modal-content" style="position: relative; overflow: hidden; background: rgba(13, 13, 21, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 16px;">
+      <!-- Three.js Canvas Container -->
+      <div id="threeModalBg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></div>
+      
+      <!-- Content Wrapper -->
+      <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column;">
+        <div class="modal-header" style="border: none; padding-bottom: 0;">
+          <button class="modal-close" style="margin-left: auto;" onclick="closePlayerModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="playerModalBody" style="background: transparent;">
+          <!-- Filled dynamically by js/rankings.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Shared Registration overlay (for nav button) ── -->
+  <div class="modal-overlay" id="regModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title title-font">Tournament Registration</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span class="form-type-badge open">⬢ Open Tournament — 2nd Week</span>
+        <div style="text-align: center; padding: 30px 10px;">
+          <p style="color: var(--text-muted); margin-bottom: 25px;">Please visit the dedicated registration page to sign up for categories.</p>
+          <a href="register.html?type=open" class="btn btn-open title-font" style="margin-right: 10px;">Open League Entry</a>
+          <a href="register.html?type=corp" class="btn btn-corp title-font">Corporate Entry</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/rankings.js"></script>
+</body>
+</html>

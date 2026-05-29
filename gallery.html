@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL — Event Gallery | Abstream Sports League</title>
+  <meta name="description" content="View action-packed snapshots and victory awards from Abstream Sports League events in Bangalore.">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* Gallery Page Specific Styles */
+    .gallery-hero {
+      padding: 140px 5% 50px;
+      text-align: center;
+      background-image: radial-gradient(circle at center, rgba(166, 78, 255, 0.08) 0%, transparent 60%);
+    }
+    
+    .gallery-container {
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+    
+    .gallery-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    
+    .gallery-tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 8px 20px;
+      color: var(--text-muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .gallery-tab-btn:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+    
+    .gallery-tab-btn.active {
+      background: rgba(166, 78, 255, 0.08);
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+    
+    /* Animation for filtering cards */
+    .gallery-card {
+      transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s ease;
+    }
+    
+    .gallery-card.hide {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      margin: 0;
+      border: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+    
+    <div class="nav-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#sports">Sports</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html" class="active">Gallery</a>
+      <a href="index.html#locations">Locations</a>
+      <a href="index.html#about">About</a>
+      <a href="login.html" id="navLoginLink">Login</a>
+    </div>
+    
+    <div class="nav-actions">
+      <button class="btn btn-primary title-font" onclick="openModal('open')">Register</button>
+      <button class="hamburger" onclick="toggleMobileNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="modal-close" style="position: absolute; top: 25px; right: 25px;" onclick="closeMobileNav()">&times;</button>
+    <div class="mobile-links">
+      <a href="index.html#hero" onclick="closeMobileNav()">Home</a>
+      <a href="index.html#sports" onclick="closeMobileNav()">Sports</a>
+      <a href="index.html#schedule" onclick="closeMobileNav()">Schedule</a>
+      <a href="rankings.html" onclick="closeMobileNav()">Rankings</a>
+      <a href="gallery.html" onclick="closeMobileNav()">Gallery</a>
+      <a href="index.html#locations" onclick="closeMobileNav()">Locations</a>
+      <a href="index.html#about" onclick="closeMobileNav()">About</a>
+      <a href="login.html" onclick="closeMobileNav()">Login</a>
+    </div>
+    <button class="btn btn-primary title-font" style="margin-top: 20px;" onclick="closeMobileNav(); openModal('open')">Register Now</button>
+  </div>
+
+  <!-- ── Gallery Hero ── -->
+  <header class="gallery-hero">
+    <span class="section-subtitle">Moments & Highlights 📸</span>
+    <h1 class="section-title">Event Gallery</h1>
+    <p class="section-desc">Relive the actions, matches, and champion celebrations from our tournaments.</p>
+  </header>
+
+  <!-- ── Main Section ── -->
+  <main class="gallery-container">
+    
+    <!-- Filter Tabs -->
+    <div class="gallery-tabs" id="galleryTabs">
+      <button class="gallery-tab-btn active" data-filter="all">All Media</button>
+      <button class="gallery-tab-btn" data-filter="badminton">Badminton</button>
+      <button class="gallery-tab-btn" data-filter="cricket">Box Cricket</button>
+      <button class="gallery-tab-btn" data-filter="esports">eSports</button>
+      <button class="gallery-tab-btn" data-filter="pickleball">Pickleball</button>
+      <button class="gallery-tab-btn" data-filter="soccer">Soccer</button>
+    </div>
+    
+    <!-- 12-Item Masonry Grid -->
+    <div class="gallery-grid" id="galleryGrid">
+      
+      <!-- Card 1: Badminton -->
+      <div class="gallery-card" data-sport="badminton" onclick="openLightbox(0)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #004e92, #000428);">
+          <span class="gallery-emoji">🏸</span>
+          <span class="gallery-label">Badminton Open</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏸</span>
+          <h4>ASL Badminton Open</h4>
+          <p>Koramangala · Jan 2026</p>
+        </div>
+      </div>
+      
+      <!-- Card 2: Box Cricket -->
+      <div class="gallery-card" data-sport="cricket" onclick="openLightbox(1)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+          <span class="gallery-emoji">🏏</span>
+          <span class="gallery-label">Box Cricket Cup</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏏</span>
+          <h4>Box Cricket Cup</h4>
+          <p>HSR Layout · Feb 2026</p>
+        </div>
+      </div>
+      
+      <!-- Card 3: eSports -->
+      <div class="gallery-card" data-sport="esports" onclick="openLightbox(2)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
+          <span class="gallery-emoji">🎮</span>
+          <span class="gallery-label">eSports Arena</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🎮</span>
+          <h4>eSports Battle</h4>
+          <p>Indiranagar · March 2026</p>
+        </div>
+      </div>
+      
+      <!-- Card 4: Pickleball -->
+      <div class="gallery-card" data-sport="pickleball" onclick="openLightbox(3)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #f857a6, #ff5858);">
+          <span class="gallery-emoji">🏓</span>
+          <span class="gallery-label">Pickleball Open</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏓</span>
+          <h4>Pickleball Open</h4>
+          <p>Koramangala · April 2026</p>
+        </div>
+      </div>
+      
+      <!-- Card 5: Soccer -->
+      <div class="gallery-card" data-sport="soccer" onclick="openLightbox(4)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #1f4037, #99f2c8);">
+          <span class="gallery-emoji">⚽</span>
+          <span class="gallery-label">Soccer League</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">⚽</span>
+          <h4>Corporate Soccer</h4>
+          <p>HSR Layout · April 2026</p>
+        </div>
+      </div>
+      
+      <!-- Card 6: Trophy -->
+      <div class="gallery-card" data-sport="badminton" onclick="openLightbox(5)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #e65c00, #f9d423);">
+          <span class="gallery-emoji">🏆</span>
+          <span class="gallery-label">Awards Ceremony</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏆</span>
+          <h4>Shield Awards</h4>
+          <p>Koramangala · May 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 7: Badminton Corporate -->
+      <div class="gallery-card" data-sport="badminton" onclick="openLightbox(6)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #1a1c29, #ffd700);">
+          <span class="gallery-emoji">🏸</span>
+          <span class="gallery-label">Corporate Badminton</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏸</span>
+          <h4>Corporate Badminton</h4>
+          <p>Koramangala · May 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 8: Box Cricket Corporate -->
+      <div class="gallery-card" data-sport="cricket" onclick="openLightbox(7)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #134e5e, #71b280);">
+          <span class="gallery-emoji">🏏</span>
+          <span class="gallery-label">Corporate Cricket</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏏</span>
+          <h4>Corporate Cricket Cup</h4>
+          <p>HSR Layout · April 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 9: eSports Corporate -->
+      <div class="gallery-card" data-sport="esports" onclick="openLightbox(8)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #3a1c71, #ffaf7b);">
+          <span class="gallery-emoji">🎮</span>
+          <span class="gallery-label">Corp eSports Arena</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🎮</span>
+          <h4>Corporate eSports</h4>
+          <p>Indiranagar · March 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 10: Pickleball Corporate -->
+      <div class="gallery-card" data-sport="pickleball" onclick="openLightbox(9)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #ff007f, #7f00ff);">
+          <span class="gallery-emoji">🏓</span>
+          <span class="gallery-label">Corp Pickleball</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏓</span>
+          <h4>Corporate Pickleball</h4>
+          <p>Koramangala · Jan 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 11: Soccer Open -->
+      <div class="gallery-card" data-sport="soccer" onclick="openLightbox(10)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #0f0c20, #f12711);">
+          <span class="gallery-emoji">⚽</span>
+          <span class="gallery-label">Open Soccer Cup</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">⚽</span>
+          <h4>Soccer Open</h4>
+          <p>HSR Layout · Jan 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 12: Medals -->
+      <div class="gallery-card" data-sport="soccer" onclick="openLightbox(11)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #ffd700, #c0c0c0);">
+          <span class="gallery-emoji">🏅</span>
+          <span class="gallery-label">ASL Medals</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏅</span>
+          <h4>Champion Medals</h4>
+          <p>HSR Layout · Feb 2026</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand">
+          <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+          <div class="nav-brand-text">
+            <span class="nav-title">ABSTREAM</span>
+            <span class="nav-subtitle">Sports League</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Organizing premium sports tournaments for Open & Corporate categories across Bengaluru.</p>
+
+      </div>
+      
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#hero">Home</a></li>
+          <li><a href="index.html#sports">Sports</a></li>
+          <li><a href="index.html#schedule">Schedule</a></li>
+          <li><a href="rankings.html">Player Rankings</a></li>
+          <li><a href="gallery.html">Event Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sports</h4>
+        <ul>
+          <li><a href="index.html#schedule">Badminton</a></li>
+          <li><a href="index.html#sports">Box Cricket</a></li>
+          <li><a href="index.html#sports">eSports</a></li>
+          <li><a href="index.html#sports">Pickleball</a></li>
+          <li><a href="index.html#sports">Soccer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <span>info@abstreamsl.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>+91 98765 43210</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Koramangala 4th Block, Bengaluru, KA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2026 Abstream Sports League. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── MODAL: Lightbox overlay ── -->
+  <div class="modal-overlay" id="lightboxModal">
+    <div class="lightbox-modal-content">
+      <button class="lightbox-close-btn" onclick="closeLightbox()">&times;</button>
+      
+      <button class="lightbox-nav-btn lightbox-btn-prev" onclick="prevLightbox()">&lsaquo;</button>
+      <div class="lightbox-content-box" id="lightboxContent">
+        <!-- Filled by JS -->
+      </div>
+      <button class="lightbox-nav-btn lightbox-btn-next" onclick="nextLightbox()">&rsaquo;</button>
+      
+      <div class="lightbox-caption" id="lightboxCaption">
+        Caption here
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Shared Registration overlay (for nav button) ── -->
+  <div class="modal-overlay" id="regModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title title-font">Tournament Registration</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span class="form-type-badge open">⬢ Open Tournament — 2nd Week</span>
+        <div style="text-align: center; padding: 30px 10px;">
+          <p style="color: var(--text-muted); margin-bottom: 25px;">Please visit the dedicated registration page to sign up for categories.</p>
+          <a href="register.html?type=open" class="btn btn-open title-font" style="margin-right: 10px;">Open League Entry</a>
+          <a href="register.html?type=corp" class="btn btn-corp title-font">Corporate Entry</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+
+  <!-- Gallery Lightbox Items Definition and Filtering Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Define the lightboxItems globally as expected by app.js
+      window.lightboxItems = [
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #004e92, #000428);"><span class="gallery-emoji" style="font-size:6rem;">🏸</span><span class="gallery-label" style="font-size:1.3rem;">Badminton Open</span></div>`,
+          caption: 'ASL Badminton Open — Koramangala, Jan 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #11998e, #38ef7d);"><span class="gallery-emoji" style="font-size:6rem;">🏏</span><span class="gallery-label" style="font-size:1.3rem;">Box Cricket Cup</span></div>`,
+          caption: 'Box Cricket Cup — HSR Layout, Feb 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #4776e6, #8e54e9);"><span class="gallery-emoji" style="font-size:6rem;">🎮</span><span class="gallery-label" style="font-size:1.3rem;">eSports Arena</span></div>`,
+          caption: 'eSports Battle — Indiranagar, March 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #f857a6, #ff5858);"><span class="gallery-emoji" style="font-size:6rem;">🏓</span><span class="gallery-label" style="font-size:1.3rem;">Pickleball Open</span></div>`,
+          caption: 'Pickleball Open — Koramangala, April 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #1f4037, #99f2c8);"><span class="gallery-emoji" style="font-size:6rem;">⚽</span><span class="gallery-label" style="font-size:1.3rem;">Soccer League</span></div>`,
+          caption: 'Corporate Soccer — HSR Layout, April 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #e65c00, #f9d423);"><span class="gallery-emoji" style="font-size:6rem;">🏆</span><span class="gallery-label" style="font-size:1.3rem;">Awards Ceremony</span></div>`,
+          caption: 'Shield Awards — Koramangala, May 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #1a1c29, #ffd700);"><span class="gallery-emoji" style="font-size:6rem;">🏸</span><span class="gallery-label" style="font-size:1.3rem;">Corporate Badminton</span></div>`,
+          caption: 'Corporate Badminton — Koramangala, May 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #134e5e, #71b280);"><span class="gallery-emoji" style="font-size:6rem;">🏏</span><span class="gallery-label" style="font-size:1.3rem;">Corporate Cricket</span></div>`,
+          caption: 'Corporate Cricket Cup — HSR Layout, April 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #3a1c71, #ffaf7b);"><span class="gallery-emoji" style="font-size:6rem;">🎮</span><span class="gallery-label" style="font-size:1.3rem;">Corp eSports Arena</span></div>`,
+          caption: 'Corporate eSports — Indiranagar, March 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #ff007f, #7f00ff);"><span class="gallery-emoji" style="font-size:6rem;">🏓</span><span class="gallery-label" style="font-size:1.3rem;">Corp Pickleball</span></div>`,
+          caption: 'Corporate Pickleball — Koramangala, Jan 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #0f0c20, #f12711);"><span class="gallery-emoji" style="font-size:6rem;">⚽</span><span class="gallery-label" style="font-size:1.3rem;">Open Soccer Cup</span></div>`,
+          caption: 'Soccer Open — HSR Layout, Jan 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #ffd700, #c0c0c0);"><span class="gallery-emoji" style="font-size:6rem;">🏅</span><span class="gallery-label" style="font-size:1.3rem;">ASL Medals</span></div>`,
+          caption: 'Champion Medals — HSR Layout, Feb 2026'
+        }
+      ];
+
+      // Tab filtering logic
+      const tabButtons = document.querySelectorAll('.gallery-tab-btn');
+      const cards = document.querySelectorAll('.gallery-card');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Set active tab styling
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.dataset.filter;
+
+          // Temp array to adjust lightbox items order based on what is filtered
+          const activeLightboxItems = [];
+
+          cards.forEach((card, index) => {
+            const sport = card.dataset.sport;
+            
+            if (filter === 'all' || sport === filter) {
+              card.classList.remove('hide');
+              // Map index to the original window.lightboxItems array
+              card.onclick = () => openLightbox(index);
+            } else {
+              card.classList.add('hide');
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

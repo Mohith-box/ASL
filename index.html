@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <title>ASL — Abstream Sports League | Multi-Sport Events in Bengaluru</title>
+  <meta name="description"
+    content="Join Abstream Sports League (ASL) for the ultimate Open & Corporate multi-sport tournaments in Bengaluru. Compete in Badminton, Box Cricket, eSports, Pickleball, and Soccer.">
+  <meta name="keywords"
+    content="sports league bengaluru, badminton tournament, box cricket bangalore, pickleball, esports league, corporate sports, soccer tournament">
+
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo" id="navLogo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#hero" class="active">Home</a>
+      <a href="#sports">Sports</a>
+      <a href="#schedule">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#locations">Locations</a>
+      <a href="#about">About</a>
+      <a href="login.html" id="navLoginLink">Login</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn btn-primary title-font" id="navRegisterBtn" onclick="openModal('open')">Register</button>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation" onclick="toggleMobileNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="modal-close" style="position: absolute; top: 25px; right: 25px;"
+      onclick="closeMobileNav()">&times;</button>
+    <div class="mobile-links">
+      <a href="#hero" onclick="closeMobileNav()">Home</a>
+      <a href="#sports" onclick="closeMobileNav()">Sports</a>
+      <a href="#schedule" onclick="closeMobileNav()">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="#locations" onclick="closeMobileNav()">Locations</a>
+      <a href="#about" onclick="closeMobileNav()">About</a>
+      <a href="login.html" onclick="closeMobileNav()">Login</a>
+    </div>
+    <button class="btn btn-primary title-font" style="margin-top: 20px;"
+      onclick="closeMobileNav(); openModal('open')">Register Now</button>
+  </div>
+
+  <!-- ── Hero Section ── -->
+  <section id="hero">
+    <div class="hero-container">
+      <div class="hero-text fade-in visible">
+        <span class="hero-badge">⚡ ASL Bengaluru's Master League</span>
+        <h1 class="hero-title display-font">PLAY<br><span>COMPETE</span><br>WIN</h1>
+        <p class="hero-description">
+          Abstream Sports League (ASL) hosts premium bi-weekly tournaments for sports enthusiasts and corporate
+          professionals across Bengaluru, Chennai, Pune, Hyderabad & Delhi. Unleash your potential and dominate the
+          rankings.
+        </p>
+        <div class="hero-actions">
+          <a href="#schedule" class="btn btn-primary title-font">View Events</a>
+          <a href="#sports" class="btn btn-outline title-font">Explore Sports</a>
+        </div>
+      </div>
+
+      <div class="hero-right-col fade-in visible">
+        <div class="hero-logo-3d-container">
+          <canvas id="asl-3d-logo-canvas"></canvas>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-number" data-count="5">0</span>
+            <span class="stat-label">Sports Categories</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">12×</span>
+            <span class="stat-label">Competations Across the Board</span>
+          </div>
+          <div class="stat-card" style="grid-column: span 2;">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">No Age Limit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ticker Bar -->
+    <div class="hero-ticker-wrap">
+      <div class="hero-ticker">
+        <div class="ticker-item"><span>🏸</span> Badminton</div>
+        <div class="ticker-item"><span>🏏</span> Box Cricket</div>
+        <div class="ticker-item"><span>🎮</span> eSports</div>
+        <div class="ticker-item"><span>🏓</span> Pickleball</div>
+        <div class="ticker-item"><span>⚽</span> Soccer</div>
+        <div class="ticker-item"><span>◆</span> Open Level (2nd Week)</div>
+        <div class="ticker-item"><span>◆</span> Corporate level (4th Week)</div>
+        <!-- Duplicated for Infinite Scroll -->
+        <div class="ticker-item"><span>🏸</span> Badminton</div>
+        <div class="ticker-item"><span>🏏</span> Box Cricket</div>
+        <div class="ticker-item"><span>🎮</span> eSports</div>
+        <div class="ticker-item"><span>🏓</span> Pickleball</div>
+        <div class="ticker-item"><span>⚽</span> Soccer</div>
+        <div class="ticker-item"><span>◆</span> Open Level (2nd Week)</div>
+        <div class="ticker-item"><span>◆</span> Corporate level (4th Week)</div>
+      </div>
+    </div>
+
+    <!-- <div class="scroll-indicator">
+      <span class="form-label" style="font-size: 0.75rem;">Scroll down</span>
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div> 
+      </div> -->
+    </div>
+  </section>
+
+  <!-- ── Sports Grid Section ── -->
+  <section id="sports" class="fade-in">
+    <div class="section-header">
+      <span class="section-subtitle">Sports We Host</span>
+      <h2 class="section-title">ASL ARENA</h2>
+      <p class="section-desc">We organize high-intensity sports events categorized into Open levels (anyone can join)
+        and Corporate tournaments (for company squads).</p>
+    </div>
+
+    <div class="sports-grid">
+      <!-- Badminton (Scrolls to schedule) -->
+      <div class="sport-card sport-badminton"
+        onclick="document.getElementById('schedule').scrollIntoView({behavior: 'smooth'})">
+        <span class="sport-card-emoji">🏸</span>
+        <div class="sport-card-tags">
+          <span class="sport-tag tag-open">Open Level</span>
+          <span class="sport-tag tag-corp">Corporate</span>
+        </div>
+        <h3 class="sport-card-title">Badminton</h3>
+        <p class="sport-card-desc">Fast-paced court rallies with Men's, Women's, and Mixed Categories. Open is hosted on
+          the 2nd week, Corporate on the 4th.</p>
+        <span class="sport-card-info">📅 Bi-Weekly | Singles & Doubles</span>
+      </div>
+
+      <!-- Box Cricket -->
+      <div class="sport-card sport-cricket" style="cursor: default;"
+        onclick="alert('Box Cricket tournaments are coming soon! Stay tuned.')">
+        <span class="sport-card-emoji">🏏</span>
+        <div class="sport-card-tags">
+          <span class="sport-tag"
+            style="background: rgba(0, 118, 255, 0.08); border: 1px solid var(--blue); color: var(--blue);">Coming
+            Soon</span>
+        </div>
+        <h3 class="sport-card-title">Box Cricket</h3>
+        <p class="sport-card-desc">High-octane indoor turf action. Quick overs, intense fielding, and powerplay thrills
+          for cricket fans.</p>
+        <span class="sport-card-info">📅 Launching Soon</span>
+      </div>
+
+      <!-- eSports -->
+      <div class="sport-card sport-esports" style="cursor: default;"
+        onclick="alert('eSports tournaments are coming soon! Stay tuned.')">
+        <span class="sport-card-emoji">🎮</span>
+        <div class="sport-card-tags">
+          <span class="sport-tag"
+            style="background: rgba(0, 118, 255, 0.08); border: 1px solid var(--blue); color: var(--blue);">Coming
+            Soon</span>
+        </div>
+        <h3 class="sport-card-title">eSports</h3>
+        <p class="sport-card-desc">Console and PC showdowns featuring top titles. Compete for gaming glory on custom
+          tournament brackets.</p>
+        <span class="sport-card-info">📅 Launching Soon</span>
+      </div>
+
+      <!-- Pickleball -->
+      <div class="sport-card sport-pickleball" style="cursor: default;"
+        onclick="alert('Pickleball tournaments are coming soon! Stay tuned.')">
+        <span class="sport-card-emoji">🏓</span>
+        <div class="sport-card-tags">
+          <span class="sport-tag"
+            style="background: rgba(0, 118, 255, 0.08); border: 1px solid var(--blue); color: var(--blue);">Coming
+            Soon</span>
+        </div>
+        <h3 class="sport-card-title">Pickleball</h3>
+        <p class="sport-card-desc">The fastest-growing paddle sport. Combines elements of tennis, badminton, and
+          ping-pong on specialized courts.</p>
+        <span class="sport-card-info">📅 Launching Soon</span>
+      </div>
+
+      <!-- Soccer -->
+      <div class="sport-card sport-soccer" style="cursor: default;"
+        onclick="alert('Soccer tournaments are coming soon! Stay tuned.')">
+        <span class="sport-card-emoji">⚽</span>
+        <div class="sport-card-tags">
+          <span class="sport-tag"
+            style="background: rgba(0, 118, 255, 0.08); border: 1px solid var(--blue); color: var(--blue);">Coming
+            Soon</span>
+        </div>
+        <h3 class="sport-card-title">Soccer</h3>
+        <p class="sport-card-desc">5-a-side rapid football tournaments on turf. Skill, stamina, and strategy define the
+          champions.</p>
+        <span class="sport-card-info">📅 Launching Soon</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Schedule Section ── -->
+  <section id="schedule" class="fade-in">
+    <div class="section-header">
+      <span class="section-subtitle schedule-upcoming-subtitle">UPCOMING</span>
+      <h2 class="section-title">ASL TOURNAMENTS</h2>
+      <p class="section-desc">Stay ahead of the game. Track upcoming league dates, choose your sport, and book your
+        category spots.</p>
+    </div>
+
+    <div class="schedule-tabs">
+      <button class="tab-btn active open-tab" id="btnTabOpen" onclick="switchTab('open', this)">Open Tournament</button>
+      <button class="tab-btn corp-tab" id="btnTabCorp" onclick="switchTab('corp', this)">Corporate Events</button>
+    </div>
+
+    <!-- Open Schedule Pane -->
+    <div class="schedule-pane active" id="tab-open">
+      <div class="calendar-selection-container">
+        <!-- Week 1 Calendar: June 27, 2026 -->
+        <div class="calendar-card open-card" onclick="openCategoriesModal('open', '2026-06-27')">
+          <div class="calendar-card-header">
+            <h4>June 27, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">June 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+              <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+              <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+              <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span
+                class="event-day">27</span><span>28</span>
+              <span>29</span><span>30</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 2 Calendar: July 11, 2026 -->
+        <div class="calendar-card open-card" onclick="openCategoriesModal('open', '2026-07-11')">
+          <div class="calendar-card-header">
+            <h4>July 11, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">July 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span>
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+              <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span
+                class="event-day">11</span><span>12</span>
+              <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+              <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+              <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 3 Calendar: July 25, 2026 -->
+        <div class="calendar-card open-card" onclick="openCategoriesModal('open', '2026-07-25')">
+          <div class="calendar-card-header">
+            <h4>July 25, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">July 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span>
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+              <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+              <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+              <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span class="event-day">25</span><span>26</span>
+              <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 4 Calendar: August 15, 2026 -->
+        <div class="calendar-card open-card" onclick="openCategoriesModal('open', '2026-08-15')">
+          <div class="calendar-card-header">
+            <h4>August 15, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">August 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span>1</span><span>2</span>
+              <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span class="event-day">15</span><span>16</span>
+              <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+              <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+              <span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 5 Calendar: August 29, 2026 -->
+        <div class="calendar-card open-card" onclick="openCategoriesModal('open', '2026-08-29')">
+          <div class="calendar-card-header">
+            <h4>August 29, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">August 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span>1</span><span>2</span>
+              <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+              <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+              <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span class="event-day">29</span><span>30</span>
+              <span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Corporate Schedule Pane -->
+    <div class="schedule-pane" id="tab-corp">
+      <div class="calendar-selection-container">
+        <!-- Week 1 Calendar: June 28, 2026 -->
+        <div class="calendar-card corp-card" onclick="openCategoriesModal('corp', '2026-06-28')">
+          <div class="calendar-card-header">
+            <h4>June 28, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">June 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+              <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+              <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+              <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span
+                class="event-day">28</span>
+              <span>29</span><span>30</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 2 Calendar: July 12, 2026 -->
+        <div class="calendar-card corp-card" onclick="openCategoriesModal('corp', '2026-07-12')">
+          <div class="calendar-card-header">
+            <h4>July 12, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">July 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span>
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+              <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span
+                class="event-day">12</span>
+              <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+              <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+              <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 3 Calendar: July 26, 2026 -->
+        <div class="calendar-card corp-card" onclick="openCategoriesModal('corp', '2026-07-26')">
+          <div class="calendar-card-header">
+            <h4>July 26, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">July 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span>
+              <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+              <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+              <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+              <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span class="event-day">26</span>
+              <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 4 Calendar: August 16, 2026 -->
+        <div class="calendar-card corp-card" onclick="openCategoriesModal('corp', '2026-08-16')">
+          <div class="calendar-card-header">
+            <h4>August 16, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">August 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span>1</span><span>2</span>
+              <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span class="event-day">16</span>
+              <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+              <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+              <span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Week 5 Calendar: August 30, 2026 -->
+        <div class="calendar-card corp-card" onclick="openCategoriesModal('corp', '2026-08-30')">
+          <div class="calendar-card-header">
+            <h4>August 30, 2026</h4>
+          </div>
+          <!-- Mini Calendar Grid -->
+          <div class="mini-calendar">
+            <div class="mini-calendar-month-year">August 2026</div>
+            <div class="mini-calendar-weekdays">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="mini-calendar-days">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span>1</span><span>2</span>
+              <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+              <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+              <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span class="event-day">30</span>
+              <span>31</span>
+            </div>
+          </div>
+          <div class="calendar-card-footer">
+            <span class="view-categories-btn">View Categories &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Schedule Category Pop-up Modal ── -->
+    <div class="modal-overlay" id="scheduleCategoryModal">
+      <div class="modal-content category-modal-content">
+        <div class="modal-header" style="align-items: flex-start;">
+          <div style="display: flex; flex-direction: column;">
+            <span class="category-modal-type-badge open" id="catModalBadge">Open League</span>
+            <h3 class="modal-title display-font" id="catModalTitle">Tournament Categories</h3>
+            <div class="modal-header-desc">
+              <span class="modal-meta-date" id="catModalDate">📅 June 27, 2026</span>
+              <span class="modal-meta-venue" id="catModalVenue">📍 ASL Arena, Koramangala</span>
+            </div>
+          </div>
+          <button class="modal-close" onclick="closeCategoriesModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding-top: 15px;">
+          <!-- Sport Selector Row -->
+          <div class="modal-sport-filter-row" id="catModalSportRow">
+            <!-- Populated via JS -->
+          </div>
+
+          <!-- Categories list -->
+          <div class="modal-category-grid" id="catModalCategoryGrid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Rankings Preview Section ── -->
+  <section id="rankings" class="fade-in"
+    style="background: var(--bg-darker); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-header">
+      <span class="section-subtitle">ASL Leaderboard</span>
+      <h2 class="section-title">Player Rankings</h2>
+      <p class="section-desc">The official ratings for ASL players across Bengaluru. Rankings update automatically after
+        every tournament round. Click a name to view details.</p>
+    </div>
+
+    <div class="rankings-table-container">
+      <table class="rankings-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;">Rank</th>
+            <th>Player Name</th>
+            <th>Primary Sport</th>
+            <th>Category</th>
+            <th>Points</th>
+            <th>Matches</th>
+            <th>Win %</th>
+          </tr>
+        </thead>
+        <tbody id="rankings-preview-tbody">
+          <!-- Populated dynamically via JS or static backup -->
+          <tr>
+            <td><span class="rank-badge rank-1">1</span></td>
+            <td>
+              <div class="rank-player-col">
+                <div class="player-avatar"
+                  style="background: linear-gradient(135deg, #ff8c00, #ff3c00); overflow: hidden;"><img
+                    src="assets/arjun_avatar.png" alt="Arjun Sharma"
+                    style="width: 100%; height: 100%; object-fit: cover;"></div>
+                <a class="player-name-link" onclick="openRankingsPlayerModal('p1')">Arjun Sharma</a>
+              </div>
+            </td>
+            <td>Badminton</td>
+            <td>Men Singles</td>
+            <td class="points-cell">2,450</td>
+            <td>32</td>
+            <td>84%</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge rank-2">2</span></td>
+            <td>
+              <div class="rank-player-col">
+                <div class="player-avatar" style="background: linear-gradient(135deg, #00f0ff, #0076ff)">PP</div>
+                <a class="player-name-link" onclick="openRankingsPlayerModal('p2')">Priya Patel</a>
+              </div>
+            </td>
+            <td>Badminton</td>
+            <td>Women Singles</td>
+            <td class="points-cell">2,180</td>
+            <td>28</td>
+            <td>78%</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge rank-3">3</span></td>
+            <td>
+              <div class="rank-player-col">
+                <div class="player-avatar" style="background: linear-gradient(135deg, #a64eff, #ff3860)">RK</div>
+                <a class="player-name-link" onclick="openRankingsPlayerModal('p3')">Rahul Krishnan</a>
+              </div>
+            </td>
+            <td>Badminton</td>
+            <td>Men Singles</td>
+            <td class="points-cell">1,940</td>
+            <td>25</td>
+            <td>72%</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge rank-other">4</span></td>
+            <td>
+              <div class="rank-player-col">
+                <div class="player-avatar" style="background: linear-gradient(135deg, #00ff88, #0076ff)">AR</div>
+                <a class="player-name-link" onclick="openRankingsPlayerModal('p4')">Ananya Reddy</a>
+              </div>
+            </td>
+            <td>Pickleball</td>
+            <td>Women Singles</td>
+            <td class="points-cell">1,820</td>
+            <td>22</td>
+            <td>77%</td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge rank-other">5</span></td>
+            <td>
+              <div class="rank-player-col">
+                <div class="player-avatar" style="background: linear-gradient(135deg, #e0a300, #ff8c00)">VS</div>
+                <a class="player-name-link" onclick="openRankingsPlayerModal('p5')">Vikram Singh</a>
+              </div>
+            </td>
+            <td>Badminton</td>
+            <td>Men Doubles</td>
+            <td class="points-cell">1,760</td>
+            <td>26</td>
+            <td>69%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="text-align: center;">
+      <a href="rankings.html" class="btn btn-outline title-font">View Full Rankings →</a>
+    </div>
+  </section>
+
+  <!-- ── Gallery Preview Section ── -->
+  <section id="gallery" class="fade-in">
+    <div class="section-header">
+      <span class="section-subtitle gallery-asl-subtitle">ASL</span>
+      <h2 class="section-title">League Gallery</h2>
+      <p class="section-desc">Catch the action shots and celebratory moments from our recent matches. Hover to expand
+        and click to view.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Card 1: Badminton Open (Gradient) -->
+      <div class="gallery-card" onclick="openLightbox(0)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #004e92, #000428);">
+          <span class="gallery-emoji">🏸</span>
+          <span class="gallery-label">Badminton Open</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏸</span>
+          <h4>ASL Badminton Open</h4>
+          <p>Koramangala · Jan 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 2: Box Cricket Event (Gradient) -->
+      <div class="gallery-card" onclick="openLightbox(1)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+          <span class="gallery-emoji">🏏</span>
+          <span class="gallery-label">Box Cricket Cup</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏏</span>
+          <h4>Box Cricket Cup</h4>
+          <p>HSR Layout · Feb 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 3: eSports Event (Gradient) -->
+      <div class="gallery-card" onclick="openLightbox(2)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
+          <span class="gallery-emoji">🎮</span>
+          <span class="gallery-label">eSports Arena</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🎮</span>
+          <h4>eSports Battle</h4>
+          <p>Indiranagar · March 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 4: Pickleball Open (Gradient) -->
+      <div class="gallery-card" onclick="openLightbox(3)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #f857a6, #ff5858);">
+          <span class="gallery-emoji">🏓</span>
+          <span class="gallery-label">Pickleball Open</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏓</span>
+          <h4>Pickleball Open</h4>
+          <p>Koramangala · April 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Corporate Soccer (Gradient) -->
+      <div class="gallery-card" onclick="openLightbox(4)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #1f4037, #99f2c8);">
+          <span class="gallery-emoji">⚽</span>
+          <span class="gallery-label">Soccer League</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">⚽</span>
+          <h4>Corporate Soccer</h4>
+          <p>HSR Layout · April 2026</p>
+        </div>
+      </div>
+
+      <!-- Card 6: ASL Shield Awards (Gradient) -->
+      <div class="gallery-card" onclick="openLightbox(5)">
+        <div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #e65c00, #f9d423);">
+          <span class="gallery-emoji">🏆</span>
+          <span class="gallery-label">Awards Ceremony</span>
+        </div>
+        <div class="gallery-card-overlay">
+          <span class="gallery-overlay-emoji">🏆</span>
+          <h4>Shield Awards</h4>
+          <p>Koramangala · May 2026</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="gallery.html" class="btn btn-outline title-font">View Full Gallery →</a>
+    </div>
+  </section>
+
+  <!-- ── Event Locations Section ── -->
+  <section id="locations" class="fade-in"
+    style="background: var(--bg-darker); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-header">
+      <h2 class="section-title">ASL Play Venues</h2>
+      <span class="section-subtitle">Where We Host</span>
+      <p class="section-desc">Our premium partner arenas in Bengaluru, equipped with state-of-the-art facilities and
+        match referees.</p>
+    </div>
+
+    <div class="locations-container">
+      <!-- Venue 1: Koramangala -->
+      <div class="location-card">
+        <div class="location-map-wrap">
+          <!-- Google Maps Embed for Koramangala Bengaluru -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15554.347599026364!2d77.61114515541991!3d12.934244299999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae144e3e3b1c67%3A0x6b864a78aa3c08e5!2sKoramangala%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1716300000000!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="location-body">
+          <h3 class="location-title">ASL Koramangala Arena</h3>
+          <p class="location-address">80 Feet Rd, 4th Block, Koramangala, Bengaluru, Karnataka 560034</p>
+          <div class="location-meta">
+            <h4 class="location-meta-title">Hosted Sports</h4>
+            <div class="location-sports-list">
+              <span class="location-sport-tag">🏸 Badminton</span>
+              <span class="location-sport-tag">🏓 Pickleball</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Venue 2: HSR Layout -->
+      <div class="location-card">
+        <div class="location-map-wrap">
+          <!-- Google Maps Embed for HSR Layout Bengaluru -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15555.789124016782!2d77.62939225541992!3d12.911244300000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae148d4dbffc3b%3A0x899d94943fcfbb!2sHSR%20Layout%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1716300000001!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="location-body">
+          <h3 class="location-title">ASL Turf & Grounds</h3>
+          <p class="location-address">27th Main Rd, Sector 1, HSR Layout, Bengaluru, Karnataka 560102</p>
+          <div class="location-meta">
+            <h4 class="location-meta-title">Hosted Sports</h4>
+            <div class="location-sports-list">
+              <span class="location-sport-tag">🏏 Box Cricket</span>
+              <span class="location-sport-tag">⚽ Soccer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Venue 3: Indiranagar -->
+      <div class="location-card">
+        <div class="location-map-wrap">
+          <!-- Google Maps Embed for Indiranagar Bengaluru -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15552.23555541178!2d77.63239225541991!3d12.9712443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae16a6bb7c2445%3A0xa1969ec6d6d45f4!2sIndiranagar%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1716300000002!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="location-body">
+          <h3 class="location-title">ASL Gaming Hub</h3>
+          <p class="location-address">100 Feet Rd, HAL 2nd Stage, Indiranagar, Bengaluru, Karnataka 560038</p>
+          <div class="location-meta">
+            <h4 class="location-meta-title">Hosted Sports</h4>
+            <div class="location-sports-list">
+              <span class="location-sport-tag">🎮 eSports</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About Section ── -->
+  <section id="about" class="fade-in">
+    <div class="about-grid">
+      <div>
+        <span class="section-subtitle">Behind The League</span>
+        <h2 class="section-title" style="text-align: left; margin-left: 0;">Elevating Local Sports</h2>
+        <p class="section-desc" style="text-align: left; margin-bottom: 25px;">
+          Abstream Sports League is a premier sports event company founded in Bengaluru, India. We are dedicated to
+          filling the gap between casual recreational play and high-level competitive athletics.
+        </p>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">
+          By organizing regular Open events for all age categories on the 2nd week, and Corporate tournaments for
+          business employees on the 4th week of every month, we provide structured schedules, official matches, and a
+          unified rankings board.
+        </p>
+
+        <div class="about-features">
+          <div class="about-feature-card">
+            <span class="about-feature-icon">🛡️</span>
+            <h4 class="about-feature-title">Official Shield</h4>
+            <p class="about-feature-desc">Every champion gets their name engraved in the ASL Shield of Honor.</p>
+          </div>
+          <div class="about-feature-card">
+            <span class="about-feature-icon">📊</span>
+            <h4 class="about-feature-title">Rankings System</h4>
+            <p class="about-feature-desc">All-over Bengaluru city rating points to measure player performance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual">
+        <div class="donut-chart-wrap">
+          <svg class="donut-svg" viewBox="0 0 42 42">
+            <circle class="donut-ring" cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--border)"
+              stroke-width="3"></circle>
+            <!-- 5 equal segments representing sports (20% each = stroke-dasharray 20 80) -->
+            <circle class="donut-segment donut-segment-1" cx="21" cy="21" r="15.915" stroke-dasharray="20 80"
+              stroke-dashoffset="100" data-sport="badminton"></circle>
+            <circle class="donut-segment donut-segment-2" cx="21" cy="21" r="15.915" stroke-dasharray="20 80"
+              stroke-dashoffset="80" data-sport="cricket"></circle>
+            <circle class="donut-segment donut-segment-3" cx="21" cy="21" r="15.915" stroke-dasharray="20 80"
+              stroke-dashoffset="60" data-sport="esports"></circle>
+            <circle class="donut-segment donut-segment-4" cx="21" cy="21" r="15.915" stroke-dasharray="20 80"
+              stroke-dashoffset="40" data-sport="pickleball"></circle>
+            <circle class="donut-segment donut-segment-5" cx="21" cy="21" r="15.915" stroke-dasharray="20 80"
+              stroke-dashoffset="20" data-sport="soccer"></circle>
+          </svg>
+          <div class="donut-center">
+            <span class="donut-center-num" id="donut-num">5</span>
+            <span class="donut-center-label" id="donut-label">Major Sports</span>
+          </div>
+
+          <!-- Interactive labels floating around the donut -->
+          <div class="donut-sport-label label-badminton" data-sport="badminton">
+            <span class="label-emoji">🏸</span> Badminton
+          </div>
+          <div class="donut-sport-label label-cricket" data-sport="cricket">
+            <span class="label-emoji">🏏</span> Box Cricket
+          </div>
+          <div class="donut-sport-label label-esports" data-sport="esports">
+            <span class="label-emoji">🎮</span> eSports
+          </div>
+          <div class="donut-sport-label label-pickleball" data-sport="pickleball">
+            <span class="label-emoji">🏓</span> Pickleball
+          </div>
+          <div class="donut-sport-label label-soccer" data-sport="soccer">
+            <span class="label-emoji">⚽</span> Soccer
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-brand">
+          <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+          <div class="nav-brand-text">
+            <span class="nav-title">ABSTREAM</span>
+            <span class="nav-subtitle">Sports League</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Organizing premium sports tournaments for Open & Corporate categories across
+          Bengaluru.</p>
+
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#sports">Sports</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="rankings.html">Player Rankings</a></li>
+          <li><a href="gallery.html">Event Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sports</h4>
+        <ul>
+          <li><a href="#schedule">Badminton</a></li>
+          <li><a href="#sports">Box Cricket</a></li>
+          <li><a href="#sports">eSports</a></li>
+          <li><a href="#sports">Pickleball</a></li>
+          <li><a href="#sports">Soccer</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <span>info@abstreamsl.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>+91 98765 43210</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Koramangala 4th Block, Bengaluru, KA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Abstream Sports League. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── MODAL: Registration Overlay ── -->
+  <div class="modal-overlay" id="regModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title title-font">Tournament Registration</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Type Badge -->
+        <span class="form-type-badge open">⬢ Open Tournament — 2nd Week</span>
+
+        <!-- Main Form -->
+        <form id="aslRegistrationForm">
+          <!-- Hidden inputs for type and amount -->
+          <input type="hidden" id="regTournamentType" value="open">
+
+          <!-- Personal Info -->
+          <div class="form-group">
+            <label class="form-label" for="regFullName">Full Name <span>*</span></label>
+            <input type="text" id="regFullName" class="form-input" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="regEmail">Email Address <span>*</span></label>
+              <input type="email" id="regEmail" class="form-input" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regPhone">Phone Number <span>*</span></label>
+              <input type="tel" id="regPhone" class="form-input" placeholder="10-digit number" required>
+            </div>
+          </div>
+
+          <!-- Gender (Hidden: Auto-selected based on category selection) -->
+          <div style="display: none;">
+            <select id="regGender" class="form-select">
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Corporate Fields (Visible only for 'corp') -->
+          <div class="form-group corp-field" style="display: none;">
+            <label class="form-label" for="regCompany">Select Company <span>*</span></label>
+            <select id="regCompany" class="form-select">
+              <option value="google">Google</option>
+              <option value="hp">HP</option>
+              <option value="tcs">TCS</option>
+              <option value="infosys">Infosys</option>
+              <option value="wipro">Wipro</option>
+              <option value="accenture">Accenture</option>
+              <option value="microsoft">Microsoft</option>
+              <option value="amazon">Amazon</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group-row corp-field" style="display: none;">
+            <div class="form-group">
+              <label class="form-label" for="regEmpId">Employee ID <span>*</span></label>
+              <input type="text" id="regEmpId" class="form-input" placeholder="e.g. EMP1234">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regDept">Department</label>
+              <input type="text" id="regDept" class="form-input" placeholder="e.g. Engineering">
+            </div>
+          </div>
+
+          <!-- Sport & Category -->
+          <div class="form-group">
+            <label class="form-label" for="regSport">Select Sport <span>*</span></label>
+            <select id="regSport" class="form-select" required>
+              <option value="badminton">Badminton</option>
+              <option value="cricket" disabled>Box Cricket (Coming Soon)</option>
+              <option value="esports" disabled>eSports (Coming Soon)</option>
+              <option value="pickleball" disabled>Pickleball (Coming Soon)</option>
+              <option value="soccer" disabled>Soccer (Coming Soon)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Select Categories <span>*</span> (Select one or more)</label>
+            <div class="category-checkbox-grid">
+              <label class="cat-checkbox-wrapper">
+                <input type="checkbox" name="categories" value="singles-men" class="cat-checkbox"
+                  onchange="togglePartnerFields()">
+                <div class="cat-checkbox-card">
+                  <span class="cat-icon">👨</span>
+                  <span class="cat-label">Men Singles</span>
+                </div>
+              </label>
+              <label class="cat-checkbox-wrapper">
+                <input type="checkbox" name="categories" value="doubles-men" class="cat-checkbox"
+                  onchange="togglePartnerFields()">
+                <div class="cat-checkbox-card">
+                  <span class="cat-icon">👨‍👨‍</span>
+                  <span class="cat-label">Men Doubles</span>
+                </div>
+              </label>
+              <label class="cat-checkbox-wrapper">
+                <input type="checkbox" name="categories" value="singles-women" class="cat-checkbox"
+                  onchange="togglePartnerFields()">
+                <div class="cat-checkbox-card">
+                  <span class="cat-icon">👩</span>
+                  <span class="cat-label">Women Singles</span>
+                </div>
+              </label>
+              <label class="cat-checkbox-wrapper">
+                <input type="checkbox" name="categories" value="doubles-women" class="cat-checkbox"
+                  onchange="togglePartnerFields()">
+                <div class="cat-checkbox-card">
+                  <span class="cat-icon">👩‍👩‍</span>
+                  <span class="cat-label">Women Doubles</span>
+                </div>
+              </label>
+              <label class="cat-checkbox-wrapper" style="grid-column: span 2;">
+                <input type="checkbox" name="categories" value="mixed-doubles" class="cat-checkbox"
+                  onchange="togglePartnerFields()">
+                <div class="cat-checkbox-card">
+                  <span class="cat-icon">👫</span>
+                  <span class="cat-label">Mixed Doubles</span>
+                </div>
+              </label>
+              <label id="teamBadmintonWrapper" class="cat-checkbox-wrapper" style="grid-column: span 2;">
+                <input type="checkbox" name="categories" value="team-badminton" class="cat-checkbox"
+                  onchange="togglePartnerFields()">
+                <div class="cat-checkbox-card">
+                  <span class="cat-icon">👥</span>
+                  <span class="cat-label">Badminton Team</span>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px;">(3 - 5
+                    persons)</span>
+                </div>
+              </label>
+            </div>
+            <span class="form-note">Badminton & Pickleball: Singles ₹650/₹750, Doubles ₹1200/₹1500. Other sports:
+              ₹500/category.</span>
+          </div>
+
+          <!-- Partner Fields (Dynamic) -->
+          <div id="partnerSection"
+            style="display: none; border-left: 2px solid var(--accent); padding-left: 20px; margin: 25px 0;">
+            <h4 class="form-label" style="color: var(--accent); margin-bottom: 15px;">Partner Details (Required for
+              Doubles)</h4>
+            <div class="form-group">
+              <label class="form-label" for="regPartnerName">Partner's Full Name <span>*</span></label>
+              <input type="text" id="regPartnerName" class="form-input" placeholder="Partner's full name">
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="regPartnerEmail">Partner's Email</label>
+                <input type="email" id="regPartnerEmail" class="form-input" placeholder="partner@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="regPartnerPhone">Partner's Phone <span>*</span></label>
+                <input type="tel" id="regPartnerPhone" class="form-input" placeholder="10-digit phone">
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Fee Calculation Summary -->
+          <div class="payment-summary">
+            <div class="payment-row">
+              <span>Category Fee (x<span id="summaryCatCount">0</span>)</span>
+              <span>₹<span id="summaryCatSubtotal">0.00</span></span>
+            </div>
+            <div class="payment-row">
+              <span>Convenience Fee (Tax)</span>
+              <span>₹0.00</span>
+            </div>
+            <div class="payment-row">
+              <span>Total Payable</span>
+              <span class="payment-row-total">₹<span id="summaryTotalPayable">0.00</span></span>
+            </div>
+          </div>
+
+          <!-- Action Buttons (app.js switches these display style depending on modal type) -->
+          <button type="submit" class="btn btn-open submit-btn-open title-font" id="btnSubmitOpen">Pay & Register
+            (Open)</button>
+          <button type="submit" class="btn btn-corp submit-btn-corp title-font" id="btnSubmitCorp"
+            style="display: none;">Pay & Register (Corporate)</button>
+        </form>
+
+        <!-- Success Container (Shown dynamically) -->
+        <div id="regSuccessContainer" class="form-success-state" style="display: none;">
+          <div class="success-icon-wrap">✔</div>
+          <h3 class="success-title title-font">Registration Successful</h3>
+          <p class="success-msg">Your category payment has been processed via RazorPay. Check your email inbox for entry
+            details.</p>
+          <div class="reg-id-box" id="successRegId">ASL-REC-876129</div>
+          <button class="btn btn-primary title-font" onclick="closeModal()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Player Profile ── -->
+  <div class="modal-overlay" id="playerModal">
+    <div class="modal-content player-modal-content"
+      style="position: relative; overflow: hidden; background: rgba(13, 13, 21, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 16px;">
+      <!-- Three.js Canvas Container -->
+      <div id="threeModalBg"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></div>
+
+      <!-- Content Wrapper -->
+      <div style="position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column;">
+        <div class="modal-header" style="border: none; padding-bottom: 0;">
+          <button class="modal-close" style="margin-left: auto;" onclick="closePlayerModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="playerModalBody" style="background: transparent;">
+          <!-- Rendered dynamically by js/rankings.js -->
+          <div class="player-profile-header">
+            <div class="player-avatar-large" style="overflow: hidden;"><img src="assets/arjun_avatar.png"
+                alt="Arjun Sharma" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            <h3 class="player-profile-name title-font">Arjun Sharma</h3>
+            <span class="player-profile-city">Rank #1 · Bengaluru City</span>
+            <div class="player-badges">
+              <span class="player-badge">🏸 Badminton</span>
+              <span class="player-badge">Singles</span>
+            </div>
+          </div>
+
+          <div class="player-stats-grid">
+            <div class="player-stat-box">
+              <span class="player-stat-val">2,450</span>
+              <span class="player-stat-label">Points</span>
+            </div>
+            <div class="player-stat-box">
+              <span class="player-stat-val">32</span>
+              <span class="player-stat-label">Matches</span>
+            </div>
+            <div class="player-stat-box">
+              <span class="player-stat-val">84%</span>
+              <span class="player-stat-label">Win Rate</span>
+            </div>
+          </div>
+
+          <div class="player-modal-section">
+            <h4 class="player-modal-sec-title">Recent History</h4>
+            <div class="player-history-list">
+              <div class="history-item">
+                <span class="history-opp">vs Rahul Krishnan</span>
+                <span class="history-score">21-18, 21-15</span>
+                <span class="history-result win">W</span>
+              </div>
+              <div class="history-item">
+                <span class="history-opp">vs Vikram Singh</span>
+                <span class="history-score">21-19, 21-17</span>
+                <span class="history-result win">W</span>
+              </div>
+              <div class="history-item">
+                <span class="history-opp">vs Abhinav Sen</span>
+                <span class="history-score">21-23, 19-21</span>
+                <span class="history-result loss">L</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL: Gallery Lightbox ── -->
+  <div class="modal-overlay" id="lightboxModal">
+    <div class="lightbox-modal-content">
+      <button class="lightbox-close-btn" onclick="closeLightbox()">&times;</button>
+
+      <button class="lightbox-nav-btn lightbox-btn-prev" onclick="prevLightbox()">&lsaquo;</button>
+      <div class="lightbox-content-box" id="lightboxContent">
+        <!-- Rendered by js -->
+      </div>
+      <button class="lightbox-nav-btn lightbox-btn-next" onclick="nextLightbox()">&rsaquo;</button>
+
+      <div class="lightbox-caption" id="lightboxCaption">
+        Caption here
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/asl-logo-3d.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/rankings.js"></script>
+
+  <!-- Setup Lightbox Items in JS for app.js -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Define the lightboxItems globally as expected by app.js
+      window.lightboxItems = [
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #004e92, #000428);"><span class="gallery-emoji" style="font-size:6rem;">🏸</span><span class="gallery-label" style="font-size:1.3rem;">Badminton Open</span></div>`,
+          caption: 'ASL Badminton Open — Koramangala, Jan 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #11998e, #38ef7d);"><span class="gallery-emoji" style="font-size:6rem;">🏏</span><span class="gallery-label" style="font-size:1.3rem;">Box Cricket Cup</span></div>`,
+          caption: 'Box Cricket Cup — HSR Layout, Feb 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #4776e6, #8e54e9);"><span class="gallery-emoji" style="font-size:6rem;">🎮</span><span class="gallery-label" style="font-size:1.3rem;">eSports Arena</span></div>`,
+          caption: 'eSports Battle — Indiranagar, March 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #f857a6, #ff5858);"><span class="gallery-emoji" style="font-size:6rem;">🏓</span><span class="gallery-label" style="font-size:1.3rem;">Pickleball Open</span></div>`,
+          caption: 'Pickleball Open — Koramangala, April 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #1f4037, #99f2c8);"><span class="gallery-emoji" style="font-size:6rem;">⚽</span><span class="gallery-label" style="font-size:1.3rem;">Soccer League</span></div>`,
+          caption: 'Corporate Soccer — HSR Layout, April 2026'
+        },
+        {
+          html: `<div class="gallery-gradient-bg" style="background: linear-gradient(135deg, #e65c00, #f9d423);"><span class="gallery-emoji" style="font-size:6rem;">🏆</span><span class="gallery-label" style="font-size:1.3rem;">Awards Ceremony</span></div>`,
+          caption: 'Shield Awards — Koramangala, May 2026'
+        }
+      ];
+    });
+  </script>
+
+  <!-- Add RazorPay + Supabase client submission handler -->
+  <!-- Note: We load register.js here too to handle the modal form submission -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="js/register.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL — Player Dashboard | Abstream Sports League</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dashboard-hero {
+      padding: 130px 5% 30px;
+      background-image: radial-gradient(circle at top left, var(--accent-glow) 0%, transparent 50%);
+      border-bottom: 1px solid var(--border);
+    }
+    .dashboard-content-wrap { padding: 40px 5% 80px; }
+    .dash-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .reg-list-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+    .reg-list-card:hover { border-color: var(--border-hover); }
+    .reg-sport-info h4 { font-size: 1.2rem; text-transform: capitalize; }
+    .reg-sport-info p  { font-size: .85rem; color: var(--text-muted); margin-top: 2px; }
+    .reg-meta { text-align: right; }
+    .reg-amount { font-weight: 700; color: var(--accent); font-size: 1.1rem; }
+    .reg-status-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: .75rem;
+      font-weight: 700;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      background: rgba(0,255,136,.08);
+      color: var(--green);
+      border: 1px solid var(--green);
+      margin-top: 5px;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      font-size: .95rem;
+    }
+    .photo-update-wrap { margin-top: 15px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <!-- Route Guard (runs before page renders) -->
+  <script>
+    const _role = sessionStorage.getItem('asl_role');
+    if (!_role || _role !== 'player') {
+      alert('Unauthorised. Please log in first.');
+      window.location.href = 'login.html';
+    }
+  </script>
+
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#sports">Sports</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-outline title-font" onclick="logoutUser()">Logout</button>
+    </div>
+  </nav>
+
+  <header class="dashboard-hero">
+    <span class="section-subtitle">Player Portal 🛡️</span>
+    <h1 class="section-title" id="dashWelcomeTitle">Welcome Back</h1>
+    <p class="section-desc">View your city ranking, registered tournaments, and recent match history.</p>
+  </header>
+
+  <main class="dashboard-content-wrap">
+    <div class="dashboard-grid">
+
+      <!-- Sidebar -->
+      <aside class="dashboard-card" id="playerSidebarProfile">
+        <div style="text-align:center;padding:40px 0;">
+          <p style="color:var(--text-muted);">Loading profile…</p>
+        </div>
+      </aside>
+
+      <!-- Main Panel -->
+      <section class="main-dashboard-panel">
+
+        <div style="margin-bottom:40px;">
+          <h3 class="dash-section-title">📅 Registered Tournaments</h3>
+          <div id="playerRegistrationsList"></div>
+        </div>
+
+        <div>
+          <h3 class="dash-section-title">📊 Recent Matches</h3>
+          <div class="player-history-list" id="playerMatchesList" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', loadPlayerDashboardData);
+
+    async function loadPlayerDashboardData() {
+      const playerId = sessionStorage.getItem('asl_player_id');
+      if (!playerId) return;
+
+      try {
+        const player  = await aslGetPlayerById(playerId);
+        const history = await aslGetPlayerHistory(playerId);
+        const email   = sessionStorage.getItem('asl_player_email') || player.email;
+        const regs    = await aslGetPlayerRegistrations(email);
+
+        // Welcome title
+        const welcome = document.getElementById('dashWelcomeTitle');
+        if (welcome) welcome.textContent = `Welcome, ${player.name}`;
+
+        // Sidebar
+        const sidebar  = document.getElementById('playerSidebarProfile');
+        const winRate  = player.matches > 0 ? Math.round((player.wins / player.matches) * 100) : 0;
+        const catName  = player.category.split('-').map(w=>w[0].toUpperCase()+w.slice(1)).reverse().join(' ');
+        const avatarHTML = player.photo_url
+          ? `<img src="${player.photo_url}" alt="${player.name}" style="width:100%;height:100%;object-fit:cover;">`
+          : player.initials;
+
+        if (sidebar) {
+          sidebar.innerHTML = `
+            <div class="dashboard-profile-info">
+              <div class="dashboard-avatar" style="background:${player.avatar_gradient};overflow:hidden;">${avatarHTML}</div>
+              <h2 class="dashboard-name title-font">${player.name}</h2>
+              <span class="dashboard-email">${player.email}</span>
+              <div class="player-badges" style="margin-top:5px;">
+                <span class="player-badge" style="text-transform:capitalize;">🏸 ${player.sport}</span>
+                <span class="player-badge">${catName}</span>
+              </div>
+              <!-- Photo update -->
+              <div class="photo-update-wrap">
+                <input type="file" id="photoUpdateInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="updateProfilePhoto(this, '${player.id}')">
+                <button class="btn btn-outline" style="font-size:.8rem;padding:6px 14px;" onclick="document.getElementById('photoUpdateInput').click()">
+                  Update Photo
+                </button>
+              </div>
+            </div>
+            <div class="dashboard-detail-list">
+              <div class="dashboard-detail-item">
+                <span class="dashboard-detail-label">Bengaluru City Rank</span>
+                <span class="dashboard-detail-value" style="color:var(--accent);font-weight:700;">#${player.rank || '—'}</span>
+              </div>
+              <div class="dashboard-detail-item">
+                <span class="dashboard-detail-label">Total Points</span>
+                <span class="dashboard-detail-value">${player.points.toLocaleString()}</span>
+              </div>
+              <div class="dashboard-detail-item">
+                <span class="dashboard-detail-label">Matches Played</span>
+                <span class="dashboard-detail-value">${player.matches}</span>
+              </div>
+              <div class="dashboard-detail-item">
+                <span class="dashboard-detail-label">Wins</span>
+                <span class="dashboard-detail-value" style="color:var(--green);">${player.wins}</span>
+              </div>
+              <div class="dashboard-detail-item">
+                <span class="dashboard-detail-label">Win Rate</span>
+                <span class="dashboard-detail-value">${winRate}%</span>
+              </div>
+            </div>`;
+        }
+
+        // Match History
+        const matchesList = document.getElementById('playerMatchesList');
+        if (matchesList) {
+          if (history.length === 0) {
+            matchesList.innerHTML = '<p style="color:var(--text-muted);">No matches recorded yet.</p>';
+          } else {
+            matchesList.innerHTML = '';
+            history.forEach(m => {
+              const item = document.createElement('div');
+              item.className = 'history-item';
+              item.style.padding = '14px 20px';
+              item.innerHTML = `
+                <span class="history-opp" style="font-weight:600;">${m.opponent}</span>
+                <span class="history-score">${m.score}</span>
+                <span class="history-result ${m.result === 'W' ? 'win' : 'loss'}">${m.result}</span>`;
+              matchesList.appendChild(item);
+            });
+          }
+        }
+
+        // Registrations
+        const regsList = document.getElementById('playerRegistrationsList');
+        if (regsList) {
+          if (regs.length === 0) {
+            regsList.innerHTML = `
+              <div class="empty-state">
+                You haven't registered for any upcoming tournaments yet.<br>
+                <a href="register.html" style="color:var(--accent);font-weight:600;text-decoration:underline;margin-top:10px;display:inline-block;">Register Now →</a>
+              </div>`;
+          } else {
+            regsList.innerHTML = '';
+            regs.forEach(reg => {
+              const card = document.createElement('div');
+              card.className = 'reg-list-card';
+              const cleanCats = reg.categories.map(c =>
+                c.split('-').map(w=>w[0].toUpperCase()+w.slice(1)).reverse().join(' ')
+              ).join(', ');
+              card.innerHTML = `
+                <div class="reg-sport-info">
+                  <h4 class="title-font">${reg.sport} — ${reg.tournament_type === 'open' ? 'Open League' : 'Corporate Cup'}</h4>
+                  <p>Categories: ${cleanCats}</p>
+                  <p>Reg ID: ${reg.registration_id} · ${new Date(reg.created_at).toLocaleDateString()}</p>
+                  ${reg.photo_url ? `<p style="margin-top:4px;"><img src="${reg.photo_url}" alt="Photo" style="width:40px;height:40px;border-radius:4px;object-fit:cover;vertical-align:middle;"> Entry Photo</p>` : ''}
+                </div>
+                <div class="reg-meta">
+                  <span class="reg-amount">₹${reg.amount_paid.toLocaleString()}</span><br>
+                  <span class="reg-status-pill">${reg.payment_status === 'success' ? 'Confirmed' : reg.payment_status}</span>
+                </div>`;
+              regsList.appendChild(card);
+            });
+          }
+        }
+
+      } catch (err) {
+        console.error('Dashboard load error:', err);
+      }
+    }
+
+    async function updateProfilePhoto(input, playerId) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      if (file.size > 2 * 1024 * 1024) { alert('Photo must be under 2 MB.'); return; }
+      try {
+        const url = await aslUploadPlayerPhoto(playerId, file);
+        await aslUpdatePlayerPhoto(playerId, url);
+        alert('Profile photo updated!');
+        loadPlayerDashboardData();
+      } catch (err) {
+        alert('Photo update failed: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

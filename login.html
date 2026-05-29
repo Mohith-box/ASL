@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL — Sign In | Abstream Sports League</title>
+  <meta name="description" content="Sign in to your Abstream Sports League (ASL) player dashboard or admin panel.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .login-hero {
+      padding: 140px 5% 40px;
+      text-align: center;
+      background-image: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 60%);
+    }
+    .login-container {
+      max-width: 480px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#sports">Sports</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#locations">Locations</a>
+      <a href="index.html#about">About</a>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-outline title-font">Home Page</a>
+      <button class="hamburger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <button class="modal-close" style="position:absolute;top:25px;right:25px;" onclick="closeMobileNav()">&times;</button>
+    <div class="mobile-links">
+      <a href="index.html#hero" onclick="closeMobileNav()">Home</a>
+      <a href="index.html#sports" onclick="closeMobileNav()">Sports</a>
+      <a href="index.html#schedule" onclick="closeMobileNav()">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#locations" onclick="closeMobileNav()">Locations</a>
+      <a href="index.html#about" onclick="closeMobileNav()">About</a>
+    </div>
+  </div>
+
+  <header class="login-hero">
+    <span class="section-subtitle">Competitors portal</span>
+    <h1 class="section-title">Sign In</h1>
+    <p class="section-desc">Access your profile ranking, registrations, or organize the league.</p>
+  </header>
+
+  <main class="login-container">
+    <div class="login-panel">
+      <div class="login-tabs">
+        <button class="login-tab-btn active" id="tabPlayer" onclick="switchLoginMode('player')">Player</button>
+        <button class="login-tab-btn"         id="tabAdmin"  onclick="switchLoginMode('admin')">Admin</button>
+      </div>
+
+      <form id="aslLoginForm">
+        <input type="hidden" id="loginMode" value="player">
+
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="e.g. player@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+        </div>
+
+        <div class="form-group" id="adminSecretKeyGroup" style="display:none;">
+          <label class="form-label" for="loginAdminKey">Admin Secret Key <span>*</span></label>
+          <input type="password" id="loginAdminKey" class="form-input" placeholder="Enter admin secret key">
+        </div>
+
+        <button type="submit" class="btn btn-primary title-font"
+          style="width:100%;margin-top:10px;padding:14px;" id="loginSubmitBtn">Sign In</button>
+
+        <p style="text-align:center;margin-top:20px;font-size:.9rem;color:var(--text-muted);" id="signupRedirectText">
+          Don't have an account?
+          <a href="signup.html" style="color:var(--accent);font-weight:600;text-decoration:underline;">Sign Up Now</a>
+        </p>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border:none;padding:40px 5% 20px;text-align:center;color:var(--text-muted);">
+      <p>© 2026 Abstream Sports League. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    function switchLoginMode(mode) {
+      document.getElementById('loginMode').value = mode;
+      document.getElementById('tabPlayer').classList.toggle('active', mode === 'player');
+      document.getElementById('tabAdmin').classList.toggle('active', mode === 'admin');
+      document.getElementById('adminSecretKeyGroup').style.display = mode === 'admin' ? 'block' : 'none';
+      const adminKey = document.getElementById('loginAdminKey');
+      if (adminKey) mode === 'admin' ? adminKey.setAttribute('required','') : adminKey.removeAttribute('required');
+      document.getElementById('loginEmail').placeholder = mode === 'admin' ? 'e.g. admin@example.com' : 'e.g. player@example.com';
+      const redirect = document.getElementById('signupRedirectText');
+      if (redirect) redirect.innerHTML = mode === 'admin'
+        ? `Don't have an Admin account? <a href="signup.html?mode=admin" style="color:var(--accent);font-weight:600;text-decoration:underline;">Sign Up Now</a>`
+        : `Don't have an account? <a href="signup.html?mode=player" style="color:var(--accent);font-weight:600;text-decoration:underline;">Sign Up Now</a>`;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const mode = new URLSearchParams(window.location.search).get('mode');
+      switchLoginMode(mode === 'admin' ? 'admin' : 'player');
+    });
+  </script>
+</body>
+</html>

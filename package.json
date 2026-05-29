@@ -1,0 +1,17 @@
+{
+  "name": "asl-sports-league",
+  "version": "2.0.0",
+  "description": "ASL - Abstream Sports League website with Supabase backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

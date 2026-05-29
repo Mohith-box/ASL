@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASL — Admin Panel | Abstream Sports League</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-hero {
+      padding: 130px 5% 30px;
+      background-image: radial-gradient(circle at top right, rgba(255,107,0,.08) 0%, transparent 50%);
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-content-wrap { padding: 40px 5% 80px; }
+    .action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .empty-db-state {
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 50px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+    /* Match recording panel */
+    .match-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 35px;
+    }
+    .match-panel h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .match-form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      align-items: end;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Route Guard -->
+  <script>
+    const _role = sessionStorage.getItem('asl_role');
+    if (!_role || _role !== 'admin') {
+      alert('Unauthorised. Please log in as Admin.');
+      window.location.href = 'login.html?mode=admin';
+    }
+  </script>
+
+  <nav>
+    <div class="nav-brand" onclick="window.location.href='index.html'">
+      <img src="assets/logo.png" alt="ASL Shield Logo" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-title">ABSTREAM</span>
+        <span class="nav-subtitle">Sports League</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#sports">Sports</a>
+      <a href="index.html#schedule">Schedule</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="gallery.html">Gallery</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-outline title-font" onclick="logoutUser()">Logout</button>
+    </div>
+  </nav>
+
+  <header class="admin-hero">
+    <span class="section-subtitle">League Administration ⚙️</span>
+    <h1 class="section-title">ASL Control Center</h1>
+    <p class="section-desc">Manage registrations, record match results, and monitor categories across Open and Corporate leagues.</p>
+  </header>
+
+  <main class="admin-content-wrap">
+
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="metric-num" id="statTotalRegistrations">—</div><div class="metric-label">Total Signups</div></div>
+      <div class="metric-card"><div class="metric-num" id="statTotalRevenue">—</div><div class="metric-label">Revenue Collected</div></div>
+      <div class="metric-card"><div class="metric-num" id="statTotalPlayers">—</div><div class="metric-label">Registered Players</div></div>
+      <div class="metric-card"><div class="metric-num" id="statBadmintonCount">—</div><div class="metric-label">Badminton Entries</div></div>
+      <div class="metric-card"><div class="metric-num" id="statPickleballCount">—</div><div class="metric-label">Pickleball Entries</div></div>
+    </div>
+
+    <!-- ── Record Match Result ── -->
+    <div class="match-panel">
+      <h3>⚡ Record Match Result</h3>
+      <p style="font-size:.9rem;color:var(--text-muted);margin-bottom:20px;">
+        Submitting a match automatically updates the player's points, win count, and city ranking.
+      </p>
+      <div class="match-form-row">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Player</label>
+          <select id="matchPlayer" class="form-select">
+            <option value="">Select player…</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Opponent</label>
+          <input type="text" id="matchOpponent" class="form-input" placeholder="e.g. Rahul Krishnan">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Score</label>
+          <input type="text" id="matchScore" class="form-input" placeholder="e.g. 21-18, 21-15">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Result</label>
+          <select id="matchResult" class="form-select">
+            <option value="W">Win (W)</option>
+            <option value="L">Loss (L)</option>
+            <option value="D">Draw (D)</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Points ±</label>
+          <input type="number" id="matchPoints" class="form-input" placeholder="e.g. 50 or -20" value="50">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">&nbsp;</label>
+          <button class="btn btn-primary title-font" style="width:100%;padding:12px;" onclick="submitMatchResult()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registrations Table -->
+    <div class="action-row">
+      <div class="admin-tabs" id="adminCategoryTabs" style="margin-bottom:0;border:none;padding-bottom:0;">
+        <button class="admin-tab-btn active" data-category="all">All Registrations</button>
+        <button class="admin-tab-btn" data-category="men">Men's</button>
+        <button class="admin-tab-btn" data-category="women">Women's</button>
+        <button class="admin-tab-btn" data-category="mixed">Mixed</button>
+      </div>
+      <button class="btn btn-outline title-font" onclick="loadAdminData()" style="font-size:.85rem;">↻ Refresh</button>
+    </div>
+
+    <div class="table-responsive" id="tableContainer">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Reg ID</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Sport</th>
+            <th>Level</th>
+            <th>Categories</th>
+            <th>Company</th>
+            <th>Photo</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="admin-tbody">
+          <tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:40px;">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-db-state" id="emptyDbNotification" style="display:none;">
+      <h3>No Registration Entries Found</h3>
+      <p style="margin-top:10px;margin-bottom:20px;">No registrations in the database yet. Submit entries via the registration form.</p>
+      <a href="register.html" class="btn btn-primary title-font">Open Registration Form</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border:none;padding:40px 5% 20px;text-align:center;color:var(--text-muted);">
+      <p>© 2026 Abstream Sports League. System Administration Panel.</p>
+    </div>
+  </footer>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    let allRegistrations = [];
+    let allPlayers       = [];
+    let currentCategoryFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadAdminData();
+
+      // Tab listeners
+      document.querySelectorAll('.admin-tab-btn').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.admin-tab-btn').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentCategoryFilter = tab.dataset.category;
+          renderAdminTable();
+        });
+      });
+    });
+
+    async function loadAdminData() {
+      try {
+        [allRegistrations, allPlayers] = await Promise.all([
+          aslGetAllRegistrations(),
+          aslGetAllPlayers()
+        ]);
+
+        // Metrics
+        const totalRev      = allRegistrations.reduce((s, r) => s + Number(r.amount_paid || 0), 0);
+        const badmintonCount= allRegistrations.filter(r => r.sport === 'badminton').length;
+        const pickleCount   = allRegistrations.filter(r => r.sport === 'pickleball').length;
+
+        document.getElementById('statTotalRegistrations').textContent = allRegistrations.length;
+        document.getElementById('statTotalRevenue').textContent       = `₹${totalRev.toLocaleString(undefined,{minimumFractionDigits:2})}`;
+        document.getElementById('statTotalPlayers').textContent       = allPlayers.length;
+        document.getElementById('statBadmintonCount').textContent     = badmintonCount;
+        document.getElementById('statPickleballCount').textContent    = pickleCount;
+
+        // Populate player select for match recording
+        const sel = document.getElementById('matchPlayer');
+        if (sel) {
+          sel.innerHTML = '<option value="">Select player…</option>';
+          allPlayers.forEach(p => {
+            const opt = document.createElement('option');
+            opt.value       = p.id;
+            opt.textContent = `${p.name} (${p.sport})`;
+            sel.appendChild(opt);
+          });
+        }
+
+        renderAdminTable();
+
+      } catch (err) {
+        console.error('Admin data load error:', err);
+      }
+    }
+
+    function renderAdminTable() {
+      const tbody      = document.getElementById('admin-tbody');
+      const emptyState = document.getElementById('emptyDbNotification');
+      const tableWrap  = document.getElementById('tableContainer');
+      if (!tbody) return;
+
+      if (allRegistrations.length === 0) {
+        tableWrap.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+      tableWrap.style.display = 'block';
+      emptyState.style.display = 'none';
+
+      const filtered = allRegistrations.filter(reg => {
+        if (currentCategoryFilter === 'all') return true;
+        if (currentCategoryFilter === 'men')   return reg.categories.some(c => c.includes('-men'));
+        if (currentCategoryFilter === 'women') return reg.categories.some(c => c.includes('-women'));
+        if (currentCategoryFilter === 'mixed') return reg.categories.some(c => c.includes('mixed'));
+        return true;
+      });
+
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:40px;">No registrations in this category filter.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(reg => {
+        const categoryPills = reg.categories.map(c => {
+          let gc = c.includes('-men') ? 'men' : c.includes('-women') ? 'women' : 'mixed';
+          const cn = c.split('-').map(w=>w[0].toUpperCase()+w.slice(1)).reverse().join(' ');
+          return `<span class="category-badge-pill ${gc}">${cn}</span>`;
+        }).join(' ');
+
+        const corpHTML = reg.tournament_type === 'corp'
+          ? `<strong style="text-transform:uppercase;">${reg.company || '—'}</strong><br><span style="font-size:.8rem;color:var(--text-muted);">${reg.employee_id || ''} ${reg.department ? '('+reg.department+')' : ''}</span>`
+          : '<span style="color:var(--text-muted);">—</span>';
+
+        const levelBadge = reg.tournament_type === 'open'
+          ? '<span style="color:var(--open-cyan);font-weight:600;font-size:.85rem;text-transform:uppercase;">Open</span>'
+          : '<span style="color:var(--corp-gold);font-weight:600;font-size:.85rem;text-transform:uppercase;">Corporate</span>';
+
+        const photoHTML = reg.photo_url
+          ? `<img src="${reg.photo_url}" alt="Photo" style="width:40px;height:40px;border-radius:4px;object-fit:cover;">`
+          : '<span style="color:var(--text-muted);">—</span>';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong style="font-family:monospace;color:var(--accent);">${reg.registration_id}</strong></td>
+          <td><strong>${reg.full_name}</strong><br><span style="font-size:.8rem;color:var(--text-muted);">Size: ${reg.t_shirt_size} · ${reg.skill_level}</span></td>
+          <td>${reg.email}<br><span style="font-size:.85rem;color:var(--text-muted);">${reg.phone}</span></td>
+          <td style="text-transform:capitalize;">${reg.sport}</td>
+          <td>${levelBadge}</td>
+          <td><div style="display:flex;flex-direction:column;gap:5px;">${categoryPills}</div></td>
+          <td>${corpHTML}</td>
+          <td>${photoHTML}</td>
+          <td><strong style="color:var(--green);">₹${Number(reg.amount_paid).toLocaleString()}</strong></td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    async function submitMatchResult() {
+      const playerId    = document.getElementById('matchPlayer').value;
+      const opponent    = document.getElementById('matchOpponent').value.trim();
+      const score       = document.getElementById('matchScore').value.trim();
+      const result      = document.getElementById('matchResult').value;
+      const pointsDelta = parseInt(document.getElementById('matchPoints').value) || 0;
+
+      if (!playerId || !opponent || !score) {
+        alert('Please fill in all match fields (player, opponent, score).');
+        return;
+      }
+
+      const player = allPlayers.find(p => p.id === playerId);
+      const sport  = player ? player.sport : '';
+
+      try {
+        await aslRecordMatch(playerId, opponent, score, result, pointsDelta, sport);
+        alert(`Match recorded! ${player?.name || ''} ${result === 'W' ? '+' : ''}${pointsDelta} points. Rankings will update automatically.`);
+        // Refresh player list to reflect new points
+        await loadAdminData();
+      } catch (err) {
+        console.error('Match record error:', err);
+        alert('Failed to record match: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
